@@ -1,6 +1,9 @@
 import { VFC, useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
+import { masterSelection } from "../config";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { getMasterList, selectMaster, masterObject } from "../models/Master";
+import { getMasterList, selectMaster, masterObject, editMaster, addMaster, masterData } from "../models/Master";
+import { selectUser, userStatus } from "../models/User";
 import { Box, TextField, InputLabel, MenuItem, FormControl, Slider, Select, SelectChangeEvent, Typography, Button } from '@mui/material';
 
 export type Props = {
@@ -8,12 +11,16 @@ export type Props = {
 }
 
 const MasterEdit: VFC<Props> = (Props) => {
+  const history = useHistory();
   const { master } = Props;
   const [name, setName] = useState<string>(master.name);
   const [type, setType] = useState<string>(master.type);
   const [point, setPoint] = useState<number>(master.point);
+  const dispatch = useAppDispatch();
   const masterList = useAppSelector(selectMaster);
-  const masters: masterObject[] = masterList.masters;
+  const userStatus: userStatus = useAppSelector(selectUser);
+  const userID = userStatus.userData? userStatus.userData.pk : 0;
+  // const masterSelection = ['cook', 'bath', 'delivery', 'clean', '‎laundry', 'sleep', 'wash', 'child', 'others'];
   const handleTypeChange = (event: SelectChangeEvent) => {
     setType(event.target.value as string);
   };
@@ -22,7 +29,25 @@ const MasterEdit: VFC<Props> = (Props) => {
     setPoint(newValue as number);
   }
 
-  return (
+  const saveMaster = () => {
+    const newMaster: masterData = {
+      user: userID,
+      type: type,
+      name: name,
+      point: point,
+    }
+    if (master.id !== 0) {
+      const newValue: masterObject = {
+        ...newMaster, id: master.id
+      }
+      dispatch(editMaster(newValue));
+      history.push("/masters");
+    } else {
+      dispatch(addMaster(newMaster));
+      history.push("/masters");
+    }
+  }
+   return (
     <>
       <Box sx={{
         '& > :not(style)': { m: 1, pb: 2, width: '40ch' },
@@ -37,7 +62,7 @@ const MasterEdit: VFC<Props> = (Props) => {
         noValidate
         autoComplete="off"
       >
-        <TextField id="outlined-basic" label="Name" variant="outlined" value={name} />
+        <TextField id="outlined-basic" label="Name" variant="outlined" value={name} onChange={(event) => setName(event.target.value)} />
       </Box>
       <Box sx={{
         '& > :not(style)': { m: 1, pb: 2, width: '40ch' },
@@ -51,8 +76,8 @@ const MasterEdit: VFC<Props> = (Props) => {
             label="Type"
             onChange={handleTypeChange}
           >
-            {masters.map((master, index) => 
-              <MenuItem value={master.type} key={index}>{master.type}</MenuItem>
+            {masterSelection.map((master, index) => 
+              <MenuItem value={master} key={index}>{master}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -79,6 +104,7 @@ const MasterEdit: VFC<Props> = (Props) => {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2, pt: 1, pb: 1, width: 120 }}
+          onClick={saveMaster}
         >
           Save
         </Button>

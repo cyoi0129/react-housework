@@ -22,6 +22,9 @@ const initialState: masterList = {
   masters: []
 }
 
+const getCookieToken = Cookies.get('csrftoken');
+const token: string = getCookieToken? getCookieToken : '';
+
 export const getMasterList = createAsyncThunk(
   "master/getMasterList",
     async () => {
@@ -42,7 +45,7 @@ export const addMaster = createAsyncThunk(
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(masterData),
-      headers: new Headers({ 'Content-type': 'application/json' })
+      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
     }).then((res) => res.json());
     return response;
   }
@@ -55,7 +58,7 @@ export const editMaster = createAsyncThunk(
       method: 'PUT',
       credentials: 'include',
       body: JSON.stringify(masterObject),
-      headers: new Headers({ 'Content-type': 'application/json' })
+      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
     }).then((res) => res.json());
     return response;
   }
