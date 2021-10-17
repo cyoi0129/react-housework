@@ -6,5 +6,4 @@ export { default as BarChart } from "./BarChart";
 export { default as LineChart } from "./LineChart";
 export { default as MasterView } from "./MasterView";
 export { default as MasterEdit } from "./MasterEdit";
-export { default as TaskView } from "./TaskView";
 export { default as TaskEdit } from "./TaskEdit";

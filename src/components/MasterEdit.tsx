@@ -17,10 +17,9 @@ const MasterEdit: VFC<Props> = (Props) => {
   const [type, setType] = useState<string>(master.type);
   const [point, setPoint] = useState<number>(master.point);
   const dispatch = useAppDispatch();
-  const masterList = useAppSelector(selectMaster);
   const userStatus: userStatus = useAppSelector(selectUser);
   const userID = userStatus.userData? userStatus.userData.pk : 0;
-  // const masterSelection = ['cook', 'bath', 'delivery', 'clean', '‎laundry', 'sleep', 'wash', 'child', 'others'];
+
   const handleTypeChange = (event: SelectChangeEvent) => {
     setType(event.target.value as string);
   };
@@ -36,7 +35,7 @@ const MasterEdit: VFC<Props> = (Props) => {
       name: name,
       point: point,
     }
-    if (master.id !== 0) {
+    if (master.id) {
       const newValue: masterObject = {
         ...newMaster, id: master.id
       }

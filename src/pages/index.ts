@@ -5,4 +5,3 @@ export { default as Register } from "./Register";
 export { default as Masters } from "./Masters";
 export { default as Master } from "./Master";
 export { default as Task } from "./Task";
-export { default as Tasks } from "./Tasks";

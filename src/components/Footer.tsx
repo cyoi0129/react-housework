@@ -4,16 +4,16 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { changeNavigation, selectNavigation } from '../models/Navigator';
 import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import CategoryIcon from '@mui/icons-material/Category';
 import EditIcon from '@mui/icons-material/Edit';
+import PersonIcon from '@mui/icons-material/Person';
 
 const Footer: VFC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const currentPage: number = useAppSelector(selectNavigation).currentPage;
   const [index, setIndex] = useState(currentPage);
-  const path = ["/", "/tasks", "/task", "/masters"];
+  const path = ["/", "/task", "/masters", "/account"];
   
   useEffect(()=>{
     setIndex(currentPage)
@@ -40,9 +40,9 @@ const Footer: VFC = () => {
       }}
       >
         <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Summary" icon={<AssessmentIcon />} />
         <BottomNavigationAction label="Task" icon={<EditIcon />} />
         <BottomNavigationAction label="Master" icon={<CategoryIcon />} />
+        <BottomNavigationAction label="Account" icon={<PersonIcon />} />
       </BottomNavigation>
     </Box>
   );

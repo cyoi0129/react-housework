@@ -1,15 +1,20 @@
 import { VFC, useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
 import { TextField, Container, Grid, List, Button } from '@mui/material';
 import { MasterView } from "../components";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { getMasterList, selectMaster, masterObject } from "../models/Master";
 
 const Masters: VFC = () => {
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const masterList = useAppSelector(selectMaster);
   const masters:masterObject[] = masterList.masters;
+  const addMaster = () => {
+    history.push('/master/new');
+  }
   return (
-  <Container maxWidth="sm" sx={{ mt: 10 }}>
+  <Container maxWidth="sm" sx={{ pt: 10, pb: 20 }}>
     <Grid container spacing={2}>
         <Grid item xs={12}>
           <List dense>
@@ -17,6 +22,15 @@ const Masters: VFC = () => {
                 <MasterView key={index} master={masterItem} />) : null
           }
           </List>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, pt: 1, pb: 1, width: 200 }}
+            onClick={addMaster}
+          >
+          Add a new master
+        </Button>
         </Grid>
       </Grid>
   </Container>
