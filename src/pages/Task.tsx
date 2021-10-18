@@ -9,30 +9,39 @@ import { TaskEdit } from "../components"
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { getTaskList, selectTask, taskObject } from "../models/Task";
 import { selectUser, userStatus } from "../models/User";
+import { dateObject, convertDate } from "../config";
 
 const Task = () => {
-  const today: Date = new Date();
+  const today: Date = new Date('2021-10-04');
   const [date, setDate] = useState<Date | null>(today);
+  const dispatch = useAppDispatch();
+  const dateObj: dateObject = convertDate(date);
   const userStatus: userStatus = useAppSelector(selectUser);
   const isLogined = userStatus.isLogined;
-  const dispatch = useAppDispatch();
-  const alertDate = (convertDate: any) => {
-    if (convertDate !== null) {
-      const y = convertDate.getFullYear();
-      const m = ("00" + (convertDate.getMonth()+1)).slice(-2);
-      const d = ("00" + convertDate.getDate()).slice(-2);
-      const dateString = y + "-" + m + "-" + d;
-      const dateNumbner = Number(y + m + d);
+  const taskList = useAppSelector(selectTask).tasks;
+  const [tasks, setTasks] = useState<taskObject[]>([]);
+  const addNewTask = () => {
+    const newTask: taskObject = {
+      id: null,
+      user: 1,
+      master: 0,
+      person: '',
+      date: '',
+      update: true,
     }
+    console.log(newTask, tasks);
+    setTasks([...tasks, newTask]);
   }
-  const taskList = useAppSelector(selectTask);
-  const tasks: taskObject[] = taskList.tasks;
 
   useEffect(() => {
     if (isLogined) {
-      dispatch(getTaskList());
+      dispatch(getTaskList(dateObj.dateString));
     }
   }, [isLogined, dispatch]);
+
+  useEffect(() => {
+      setTasks(taskList);
+  }, [taskList]);
 
   return (
     <Container maxWidth="sm" sx={{pt: 10, pb: 20}}>
@@ -42,7 +51,6 @@ const Task = () => {
           value={date}
           onChange={(newDate) => {
             setDate(newDate);
-            alertDate(newDate);
           }}
           renderInput={(params) => <TextField {...params} />}
         />
@@ -51,12 +59,12 @@ const Task = () => {
         <Grid item xs={12}>
           <List dense={false}>
           {tasks !== [] ? tasks.map((taskItem, index) =>
-                <TaskEdit key={index} task={taskItem} date={date} />) : null
+                <TaskEdit key={index} task={taskItem} />) : null
           }
           </List>
         </Grid>
       </Grid>
-      <Button variant="contained" startIcon={<AddIcon />} sx={{ m:1, p: 1, width: 120 }}>Add</Button>
+      <Button variant="contained" startIcon={<AddIcon />} sx={{ m:1, p: 1, width: 120 }} onClick={addNewTask}>Add</Button>
       <Button variant="contained" startIcon={<SaveIcon />} sx={{ m:1, p: 1, width: 120 }}>Save</Button>
     </Container>
   );

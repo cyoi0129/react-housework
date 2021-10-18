@@ -3,17 +3,17 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { Box, TextField, InputLabel, MenuItem, FormControl, Slider, Select, SelectChangeEvent, Typography, Button, Container, Grid, ListItem, ListItemText } from '@mui/material';
 import { taskObject } from "../models/Task";
 import { selectMaster, masterObject, editMaster, addMaster, masterData } from "../models/Master";
-import { dateObject, convertDate } from "../config";
+// import { dateObject, convertDate } from "../config";
 
 export type Props = {
   task: taskObject;
-  date: Date | null;
+  // date: Date | null;
 }
 
 const TaskEdit: VFC<Props> = (Props) => {
-  const { task, date } = Props;
-  const dateObj: dateObject = convertDate(date);
-  console.log(dateObj);
+  const { task } = Props;
+  // const { task, date } = Props;
+  // const dateObj: dateObject = convertDate(date);
   const masterList = useAppSelector(selectMaster);
   const masters: masterObject[] = masterList.masters;
   const targetMaster = masters.find(master => master.id === task.master);

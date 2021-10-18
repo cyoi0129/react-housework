@@ -28,8 +28,9 @@ const token: string = getCookieToken? getCookieToken : '';
 
 export const getTaskList = createAsyncThunk(
   "task/getTaskList",
-    async () => {
-      const response = await fetch(apiURL + "api/tasks/", {
+    async (date?:string) => {
+      const taskURL = date? `${apiURL}api/tasks/?date=${date}`: `${apiURL}api/tasks/`;
+      const response = await fetch(taskURL, {
         method: 'GET',
         credentials: 'include',
         mode: 'cors',
