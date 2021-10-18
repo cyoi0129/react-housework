@@ -4,6 +4,7 @@ import { TextField, Container, Grid, List, Button } from '@mui/material';
 import { MasterView } from "../components";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { getMasterList, selectMaster, masterObject } from "../models/Master";
+import AddIcon from '@mui/icons-material/Add';
 
 const Masters: VFC = () => {
   const history = useHistory();
@@ -28,6 +29,7 @@ const Masters: VFC = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2, pt: 1, pb: 1, width: 200 }}
             onClick={addMaster}
+            startIcon={<AddIcon />}
           >
           Add a new master
         </Button>

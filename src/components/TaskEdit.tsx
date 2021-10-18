@@ -30,10 +30,10 @@ const TaskEdit: VFC<Props> = (Props) => {
   return (
     <ListItem>
         <Grid container spacing={2}>
-          <Grid item xs={2}>
+          {/* <Grid item xs={2}>
             <ListItemText sx={{pt:1}} primary={task.id ? task.id: 'new'} />
-          </Grid>
-          <Grid item xs={5}>
+          </Grid> */}
+          <Grid item xs={8}>
             <FormControl fullWidth>
               <InputLabel id="master-select-label">Master</InputLabel>
               <Select
@@ -52,7 +52,7 @@ const TaskEdit: VFC<Props> = (Props) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <FormControl fullWidth>
               <InputLabel id="person-select-label">Person</InputLabel>
               <Select

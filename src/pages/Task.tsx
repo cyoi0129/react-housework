@@ -17,8 +17,7 @@ const Task = () => {
   const dispatch = useAppDispatch();
   const dateObj: dateObject = convertDate(date);
   const userStatus: userStatus = useAppSelector(selectUser);
-  const isLogined = userStatus.isLogined;
-  const taskList = useAppSelector(selectTask).tasks;
+  const taskList = useAppSelector(selectTask);
   const [tasks, setTasks] = useState<taskObject[]>([]);
   const addNewTask = () => {
     const newTask: taskObject = {
@@ -29,22 +28,20 @@ const Task = () => {
       date: '',
       update: true,
     }
-    console.log(newTask, tasks);
     setTasks([...tasks, newTask]);
   }
 
   useEffect(() => {
-    if (isLogined) {
-      dispatch(getTaskList(dateObj.dateString));
-    }
-  }, [isLogined, dispatch]);
+    setTasks(taskList.tasks);
+  }, [taskList, dispatch]);
 
   useEffect(() => {
-      setTasks(taskList);
-  }, [taskList]);
+    setTasks([]);
+    dispatch(getTaskList(dateObj.dateString));
+  }, [date]);
 
   return (
-    <Container maxWidth="sm" sx={{pt: 10, pb: 20}}>
+    <Container maxWidth="sm" sx={{ pt: 10, pb: 20 }}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           label="Select Date"
@@ -58,14 +55,14 @@ const Task = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <List dense={false}>
-          {tasks !== [] ? tasks.map((taskItem, index) =>
-                <TaskEdit key={index} task={taskItem} />) : null
-          }
+            {tasks !== [] ? tasks.map((taskItem, index) =>
+              <TaskEdit key={index} task={taskItem} />) : null
+            }
           </List>
         </Grid>
       </Grid>
-      <Button variant="contained" startIcon={<AddIcon />} sx={{ m:1, p: 1, width: 120 }} onClick={addNewTask}>Add</Button>
-      <Button variant="contained" startIcon={<SaveIcon />} sx={{ m:1, p: 1, width: 120 }}>Save</Button>
+      <Button variant="contained" startIcon={<AddIcon />} sx={{ m: 1, p: 1, width: 120 }} onClick={addNewTask}>Add</Button>
+      <Button variant="contained" startIcon={<SaveIcon />} sx={{ m: 1, p: 1, width: 120 }}>Save</Button>
     </Container>
   );
 }
