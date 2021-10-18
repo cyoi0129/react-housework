@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { Home, Login, Masters, Master, Task, Register, Account } from "./pages";
 import { Header, Footer, ScrollToTop } from './components';
 import './App.css';
-import { getUserData, selectUser, userStatus } from "./models/User";
+import { getUserData, selectUser, userStatus, setLoginStatus, userLogout } from "./models/User";
 import { getMasterList, selectMaster } from "./models/Master";
 
 const App: VFC = () => {
@@ -20,6 +20,7 @@ const App: VFC = () => {
     if (isLogined) {
       dispatch(getUserData());
       dispatch(getMasterList());
+      dispatch(setLoginStatus());
       history.push("/");
     }
   }, [isLogined, dispatch]);

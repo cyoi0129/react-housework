@@ -12,6 +12,7 @@ export interface taskData {
 
 export interface taskObject extends taskData {
   id: number | null;
+  update: boolean;
 }
 
 export interface taskList {

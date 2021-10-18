@@ -93,6 +93,9 @@ const userSlice = createSlice({
       Cookies.remove('csrftoken');
       Cookies.remove('sessionid');
     },
+    setLoginStatus: (state) => {
+      state.isLogined = true;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(userLogin.fulfilled, (state, action) => {
@@ -133,4 +136,4 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const selectUser = (state: RootState) => state.user;
-export const { userLogout } = userSlice.actions;
+export const { userLogout, setLoginStatus } = userSlice.actions;

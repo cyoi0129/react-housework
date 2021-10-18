@@ -9,7 +9,7 @@ const Masters: VFC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const masterList = useAppSelector(selectMaster);
-  const masters:masterObject[] = masterList.masters;
+  const masters: masterObject[] = masterList.masters;
   const addMaster = () => {
     history.push('/master/new');
   }
