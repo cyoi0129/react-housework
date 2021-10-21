@@ -8,7 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TaskEdit } from "../components"
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { getTaskList, selectTask, taskObject } from "../models/Task";
+import { getTaskList, selectTask, taskList, taskObject } from "../models/Task";
 import { selectUser, userStatus } from "../models/User";
 import { dateObject, convertDate } from "../config";
 
@@ -23,7 +23,9 @@ const Task = () => {
   const dispatch = useAppDispatch();
   const dateObj: dateObject = convertDate(date);
   const userStatus: userStatus = useAppSelector(selectUser);
-  const taskList = useAppSelector(selectTask);
+  const initTaskList: taskList = useAppSelector(selectTask);
+  const initTaskListData: taskObject[] = initTaskList.tasks;
+  const initIDArray: number[] = initTaskListData.map(task => task.id);
   const [tasks, setTasks] = useState<taskObject[]>([]);
 
   const addNewTask = () => {
@@ -46,22 +48,30 @@ const Task = () => {
   }
 
   const setTask = (newTask: taskObject) => {
-    const tempTaskList: taskObject[] = tasks
-    const targetTask = tempTaskList.find(task => task.id === newTask.id);
-    if (targetTask) {
-      targetTask.master = newTask.master;
-      targetTask.person = newTask.person;
-    }
+    let tempTaskList = tasks.filter(task => task.id !== newTask.id);
+    tempTaskList.push(newTask);
+    tempTaskList.sort((a, b) => {
+      if (a.id < b.id) return -1;
+      if (a.id > b.id) return 1;
+      return 0;
+    });
     setTasks(tempTaskList);
   }
 
   const saveTasks = () => {
-    console.log(tasks);
+    const currentIDArray: number[] = tasks.map(task => task.id);
+    const newTasks: taskObject[] = tasks.filter(task => !initIDArray.includes(task.id));
+    const removedTasks: taskObject[] = initTaskListData.filter(task => !currentIDArray.includes(task.id));
+    const existTasks: taskObject[] = tasks.filter(task => initIDArray.includes(task.id));
+    const changedTasks: taskObject[] = existTasks.filter(task => task.update === true);
+    console.log('newTasks:', newTasks);
+    console.log('removedTasks:', removedTasks);
+    console.log('changedTasks:', changedTasks);
   }
 
   useEffect(() => {
-    setTasks(taskList.tasks);
-  }, [taskList, dispatch]);
+    setTasks(initTaskList.tasks);
+  }, [initTaskList, dispatch]);
 
   useEffect(() => {
     setTasks([]);
