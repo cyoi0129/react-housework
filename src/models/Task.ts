@@ -11,7 +11,7 @@ export interface taskData {
 }
 
 export interface taskObject extends taskData {
-  id: number | null;
+  id: number;
   update: boolean;
 }
 
@@ -36,6 +36,9 @@ export const getTaskList = createAsyncThunk(
         mode: 'cors',
         cache: 'no-cache',
       }).then((res) => res.json());
+      response.forEach((element: any) => {
+        element['update'] = false;
+      });
       return response;
     }
 );

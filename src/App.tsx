@@ -22,9 +22,11 @@ const App: VFC = () => {
       dispatch(getMasterList());
       dispatch(setLoginStatus());
       history.push("/");
+    } else {
+      history.push("/login");
     }
   }, [isLogined, dispatch]);
-  
+
   return (
     <>
       <ScrollToTop />

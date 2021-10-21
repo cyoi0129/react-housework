@@ -22,11 +22,11 @@ const Acount: VFC = () => {
     history.push("/");
   }
 
-  useEffect(() => {
-    if (!isLogined) {
-      history.push("/login");
-    }
-  }, [userStatus]);
+  // useEffect(() => {
+  //   if (!isLogined) {
+  //     history.push("/login");
+  //   }
+  // }, [userStatus]);
 
   return (
     <Container sx={{ pb: 20, pt: 10 }}>
