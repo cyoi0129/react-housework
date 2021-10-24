@@ -8,7 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TaskEdit } from "../components"
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { getTaskList, selectTask, taskList, taskObject } from "../models/Task";
+import { getTaskList, selectTask, taskList, taskObject, changeTaskList, deleteTask, editTask } from "../models/Task";
 import { selectUser, userStatus } from "../models/User";
 import { dateObject, convertDate } from "../config";
 
@@ -64,9 +64,16 @@ const Task = () => {
     const removedTasks: taskObject[] = initTaskListData.filter(task => !currentIDArray.includes(task.id));
     const existTasks: taskObject[] = tasks.filter(task => initIDArray.includes(task.id));
     const changedTasks: taskObject[] = existTasks.filter(task => task.update === true);
-    console.log('newTasks:', newTasks);
-    console.log('removedTasks:', removedTasks);
-    console.log('changedTasks:', changedTasks);
+    const changedTaskList = {
+      editTaskList: changedTasks,
+      newTaskList: newTasks
+    }
+    dispatch(changeTaskList(changedTaskList));
+    if (removedTasks.length > 0) {
+      removedTasks.forEach(target => {
+        dispatch(deleteTask(target));
+      })
+    }
   }
 
   useEffect(() => {

@@ -63,6 +63,7 @@ export const editMaster = createAsyncThunk(
       body: JSON.stringify(masterObject),
       headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
     }).then((res) => res.json());
+    console.log(token);
     return response;
   }
 );

@@ -10,6 +10,10 @@ export interface taskData {
   date: string;
 }
 
+export interface existTask extends taskData {
+  id: number;
+}
+
 export interface taskObject extends taskData {
   id: number;
   update: boolean;
@@ -17,6 +21,11 @@ export interface taskObject extends taskData {
 
 export interface taskList {
   tasks: taskObject[] | [];
+}
+
+export interface changedTaskList {
+  editTaskList: taskObject[] | [];
+  newTaskList: taskObject[] | [];
 }
 
 const initialState: taskList = {
@@ -41,6 +50,41 @@ export const getTaskList = createAsyncThunk(
       });
       return response;
     }
+);
+
+export const changeTaskList = createAsyncThunk(
+  "task/changeTaskList",
+  async (taskData: changedTaskList) => {
+    let postData: (taskData | existTask)[] = [];
+    taskData.editTaskList.forEach( item => {
+      postData.push(
+        {
+          id: item.id,
+          user: item.user,
+          master: item.master,
+          person: item.person,
+          date: item.date
+        }
+      )
+    })
+    taskData.newTaskList.forEach( item => {
+      postData.push(
+        {
+          user: item.user,
+          master: item.master,
+          person: item.person,
+          date: item.date
+        }
+      )
+    })
+    const response = await fetch(apiURL + "api/tasks/", {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(postData),
+      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
+    }).then((res) => res.json());
+    return response;
+  }
 );
 
 export const addTask = createAsyncThunk(
@@ -69,16 +113,16 @@ export const editTask = createAsyncThunk(
   }
 );
 
-export const removeTask = createAsyncThunk(
-  "task/removeTask",
+export const deleteTask = createAsyncThunk(
+  "task/deleteTask",
   async (taskObject: taskObject) => {
     const response = await fetch(apiURL + "api/tasks/" + String(taskObject.id) + "/" , {
       method: 'DELETE',
       credentials: 'include',
       body: JSON.stringify(taskObject),
-      headers: new Headers({ 'Content-type': 'application/json' })
+      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
     }).then((res) => res.json());
-    return response;
+    return taskObject.id;
   }
 );
 
@@ -90,6 +134,9 @@ const taskSlice = createSlice({
     builder.addCase(getTaskList.fulfilled, (state, action) => {
       state.tasks = action.payload;
     });
+    builder.addCase(changeTaskList.fulfilled, (state, action) => {
+      state.tasks = action.payload;
+    });
     builder.addCase(addTask.fulfilled, (state, action) => {
       state.tasks = [...state.tasks, action.payload];
     });
@@ -97,14 +144,21 @@ const taskSlice = createSlice({
       state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
       state.tasks = [...state.tasks, action.payload];
     });
-    builder.addCase(removeTask.fulfilled, (state, action) => {
-      state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
+    builder.addCase(deleteTask.fulfilled, (state, action) => {
+      const targetID: number = Number(action.payload);
+      state.tasks = state.tasks.filter(task => task.id !== targetID);
     });
     // エラー処理ブロック
     builder.addCase(getTaskList.pending, () => {
       // エラー画面表示
     });
     builder.addCase(getTaskList.rejected, () => {
+      // エラー画面表示
+    });
+    builder.addCase(changeTaskList.pending, () => {
+      // エラー画面表示
+    });
+    builder.addCase(changeTaskList.rejected, () => {
       // エラー画面表示
     });
     builder.addCase(addTask.pending, () => {
@@ -119,10 +173,10 @@ const taskSlice = createSlice({
     builder.addCase(editTask.rejected, () => {
       // エラー画面表示
     });
-    builder.addCase(removeTask.pending, () => {
+    builder.addCase(deleteTask.pending, () => {
       // エラー画面表示
     });
-    builder.addCase(removeTask.rejected, () => {
+    builder.addCase(deleteTask.rejected, () => {
       // エラー画面表示
     });
   }
