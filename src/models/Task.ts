@@ -121,7 +121,14 @@ export const deleteTask = createAsyncThunk(
       credentials: 'include',
       body: JSON.stringify(taskObject),
       headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
-    }).then((res) => res.json());
+    })
+    .then((res) => res.json())
+    .then(result => {
+      console.log('Success:', result);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
     return taskObject.id;
   }
 );
@@ -145,6 +152,7 @@ const taskSlice = createSlice({
       state.tasks = [...state.tasks, action.payload];
     });
     builder.addCase(deleteTask.fulfilled, (state, action) => {
+      console.log('call sucess')
       const targetID: number = Number(action.payload);
       state.tasks = state.tasks.filter(task => task.id !== targetID);
     });
