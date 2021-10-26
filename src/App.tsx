@@ -1,4 +1,4 @@
-import { VFC, useEffect, useState } from "react";
+import { VFC, useEffect, useState, createContext } from "react";
 import { useHistory } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import { useAppSelector, useAppDispatch } from './app/hooks';
@@ -7,12 +7,12 @@ import { Home, Login, Masters, Master, Task, Register, Account } from "./pages";
 import { Header, Footer, ScrollToTop } from './components';
 import './App.css';
 import { getUserData, selectUser, userStatus, setLoginStatus, userLogout } from "./models/User";
-import { getMasterList, selectMaster } from "./models/Master";
+import { getMasterList, selectMaster, masterList } from "./models/Master";
 
 const App: VFC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const userStatus:userStatus = useAppSelector(selectUser);
+  const userStatus: userStatus = useAppSelector(selectUser);
   const masterStatus = useAppSelector(selectMaster);
   const isLogined: boolean = Cookies.get('isLogined') === '1' ? true : false;
 

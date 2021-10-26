@@ -8,7 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TaskEdit } from "../components"
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { getTaskList, selectTask, taskList, taskObject, changeTaskList, deleteTask, editTask } from "../models/Task";
+import { getTaskList, selectTask, taskList, taskObject, changeTaskList, deleteTask } from "../models/Task";
 import { selectUser, userStatus } from "../models/User";
 import { dateObject, convertDate } from "../config";
 
@@ -18,7 +18,7 @@ export const TaskContext = createContext({} as {
 })
 
 const Task = () => {
-  const today: Date = new Date('2021-10-04');
+  const today: Date = new Date();
   const [date, setDate] = useState<Date | null>(today);
   const dispatch = useAppDispatch();
   const dateObj: dateObject = convertDate(date);
@@ -82,8 +82,7 @@ const Task = () => {
 
   useEffect(() => {
     setTasks([]);
-    // dispatch(getTaskList(dateObj.dateString));
-    dispatch(getTaskList());
+    dispatch(getTaskList(dateObj.dateString));
   }, [date]);
 
   return (

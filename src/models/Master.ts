@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
 import { RootState } from "../app/store";
 import { apiURL } from "../config";
 import Cookies from 'js-cookie';
@@ -18,7 +17,7 @@ export interface masterObject extends masterData {
 }
 
 export interface masterList {
-  masters: masterObject[] | [];
+  masters: masterObject[];
 }
 
 const initialState: masterList = {
@@ -129,3 +128,13 @@ const masterSlice = createSlice({
 
 export default masterSlice.reducer;
 export const selectMaster = (state: RootState) => state.master;
+export const selectMasterByID = createSelector(
+  (state: RootState) => state.master,
+  (state: RootState, masterID: number) => masterID,
+  (masters, masterID) => masters.masters.find(master => master.id === masterID),
+)
+export const selectMasterByName = createSelector(
+  (state: RootState) => state.master,
+  (state: RootState, masterName: string) => masterName,
+  (masters, masterName) => masters.masters.find(master => master.name === masterName),
+)
