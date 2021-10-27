@@ -1,5 +1,7 @@
-import { FC } from 'react';
+// Basic Library
+import { VFC } from 'react';
 import { Pie } from 'react-chartjs-2';
+import { langSet } from "../config";
 
 export type Props = {
   dad: number;
@@ -7,7 +9,7 @@ export type Props = {
 }
 
 // レンダリング
-const PieChart: FC <Props> = (Props) => {
+const PieChart: VFC <Props> = (Props) => {
   const { dad, mom } = Props;
   const data = {
     // x 軸のラベル

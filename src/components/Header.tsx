@@ -1,7 +1,13 @@
+// Basic Library
 import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
+import { langSet } from "../config";
+
+// Models
 import { changeNavigation } from '../models/Navigator';
+
+// UI
 import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -17,11 +23,11 @@ const Header: VFC<Props> = (Props) => {
   const dispatch = useAppDispatch();
   const toLogin = () => {
     history.push("/login");
-    dispatch(changeNavigation(0));
+    dispatch(changeNavigation(3));
   }
   const toAccount = () => {
     history.push("/account");
-    dispatch(changeNavigation(0));
+    dispatch(changeNavigation(3));
   }
   return (
     <Box sx={{

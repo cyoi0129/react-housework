@@ -1,15 +1,24 @@
-import { VFC, useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+// Basic Library
+import { VFC, useContext } from "react";
+import { useAppSelector } from '../app/hooks';
 import { useRouteMatch } from "react-router";
+import { langSet } from "../config";
+
+// Components
 import { MasterEdit } from '../components';
+
+// Models
+import { selectMaster, masterObject } from "../models/Master";
+import { userStatus } from "../models/User";
+import { UserContext } from "../App";
+
+// UI
 import { Container } from '@mui/material';
-import { getMasterList, selectMaster, masterObject } from "../models/Master";
-import { selectUser } from "../models/User";
 
 const Master: VFC = () => {
   const match = useRouteMatch();
   const masterList = useAppSelector(selectMaster);
-  const userStatus = useAppSelector(selectUser);
+  const userStatus: userStatus = useContext(UserContext).user;
   const currentUserID = userStatus.userData? userStatus.userData.pk : 0;
   const masters: masterObject[] = masterList.masters;
   const { masterID } = match.params as { masterID: string };

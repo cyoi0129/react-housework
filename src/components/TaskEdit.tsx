@@ -1,19 +1,25 @@
+// Basic Library
 import { VFC, useEffect, useState, useContext } from "react";
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { Box, TextField, InputLabel, MenuItem, FormControl, Slider, Select, SelectChangeEvent, Typography, Button, Container, Grid, ListItem, ListItemText } from '@mui/material';
+import { useAppSelector } from '../app/hooks';
+import { langSet } from "../config";
+
+// Models
 import { taskObject } from "../models/Task";
-import { selectMaster, masterObject, editMaster, addMaster, masterData, selectMasterByID, selectMasterByName } from "../models/Master";
+import { selectMaster, masterObject } from "../models/Master";
 import { TaskContext } from "../pages/Task";
+
+// UI
+import { InputLabel, MenuItem, FormControl, Select, SelectChangeEvent, Grid } from '@mui/material';
+
 
 
 const TaskEdit: VFC = () => {
   const { task, setTask } = useContext(TaskContext);
   const masterList = useAppSelector(selectMaster);
   const masters: masterObject[] = masterList.masters;
-
   // const targetMasterByID = (targetID: number) => useAppSelector((state) => selectMasterByID(state, targetID));
   // const targetMasterByName = (targetName: string) => useAppSelector((state) => selectMasterByName(state, targetName));
-
+  
   const getMasterName = (targetID: number) => {
     const targetMaster = masters.find(master => master.id === targetID);
     const masterName: string = targetMaster ? targetMaster.name : '';

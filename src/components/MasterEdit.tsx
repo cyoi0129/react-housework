@@ -1,9 +1,15 @@
-import { VFC, useEffect, useState } from "react";
+// Basic Library
+import { VFC, useState, useContext } from "react";
 import { useHistory } from 'react-router-dom';
-import { masterSelection } from "../config";
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { getMasterList, selectMaster, masterObject, editMaster, addMaster, masterData } from "../models/Master";
-import { selectUser, userStatus } from "../models/User";
+import { masterSelection, langSet } from "../config";
+import { useAppDispatch } from '../app/hooks';
+
+// Models
+import { masterObject, editMaster, addMaster, masterData } from "../models/Master";
+import { UserContext } from "../App";
+import { userStatus } from "../models/User";
+
+// UI
 import { Box, TextField, InputLabel, MenuItem, FormControl, Slider, Select, SelectChangeEvent, Typography, Button } from '@mui/material';
 
 export type Props = {
@@ -17,7 +23,7 @@ const MasterEdit: VFC<Props> = (Props) => {
   const [type, setType] = useState<string>(master.type);
   const [point, setPoint] = useState<number>(master.point);
   const dispatch = useAppDispatch();
-  const userStatus: userStatus = useAppSelector(selectUser);
+  const userStatus: userStatus = useContext(UserContext).user;
   const userID = userStatus.userData? userStatus.userData.pk : 0;
 
   const handleTypeChange = (event: SelectChangeEvent) => {

@@ -1,4 +1,17 @@
-import { useState, useEffect, createContext } from 'react';
+// Basic Library
+import { useState, useEffect, createContext, useContext } from 'react';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { dateObject, convertDate, langSet } from "../config";
+
+// Components
+import { TaskEdit } from "../components"
+
+// Models
+import { getTaskList, selectTask, taskList, taskObject, changeTaskList, deleteTask } from "../models/Task";
+import { userStatus } from "../models/User";
+import { UserContext } from "../App";
+
+// UI
 import { TextField, Container, Grid, List, Button, ListItem } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -6,11 +19,6 @@ import DatePicker from '@mui/lab/DatePicker';
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { TaskEdit } from "../components"
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { getTaskList, selectTask, taskList, taskObject, changeTaskList, deleteTask } from "../models/Task";
-import { selectUser, userStatus } from "../models/User";
-import { dateObject, convertDate } from "../config";
 
 export const TaskContext = createContext({} as {
   task: taskObject;
@@ -22,7 +30,8 @@ const Task = () => {
   const [date, setDate] = useState<Date | null>(today);
   const dispatch = useAppDispatch();
   const dateObj: dateObject = convertDate(date);
-  const userStatus: userStatus = useAppSelector(selectUser);
+  const userStatus: userStatus = useContext(UserContext).user;
+  const currentUserID: number = userStatus.userData ? userStatus.userData.pk : 0;
   const initTaskList: taskList = useAppSelector(selectTask);
   const initTaskListData: taskObject[] = initTaskList.tasks;
   const initIDArray: number[] = initTaskListData.map(task => task.id);
@@ -34,7 +43,7 @@ const Task = () => {
     const newID: number = currentID + 1;
     const newTask: taskObject = {
       id: newID,
-      user: 1,
+      user: currentUserID,
       master: 0,
       person: '',
       date: dateObj.dateString,

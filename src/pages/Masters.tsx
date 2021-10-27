@@ -1,9 +1,17 @@
-import { VFC, useEffect, useState } from "react";
+// Basic Library
+import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
-import { TextField, Container, Grid, List, Button } from '@mui/material';
-import { MasterView } from "../components";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { getMasterList, selectMaster, masterObject } from "../models/Master";
+import { langSet } from "../config";
+
+// Components
+import { MasterView } from "../components";
+
+// Models
+import { selectMaster, masterObject } from "../models/Master";
+
+// UI
+import { Container, Grid, List, Button, ListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 const Masters: VFC = () => {

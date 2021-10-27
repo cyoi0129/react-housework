@@ -1,20 +1,19 @@
-import { VFC, useEffect, useState } from "react";
+// Basic Library
+import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { Switch, Route } from 'react-router';
-import { userStatus, selectUser, userLogout } from "../models/User";
-import { Grid, Typography, Container, Paper, Box, Button } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Cookies from 'js-cookie';
+import { langSet } from "../config";
 
-// export type Props = {
-//   user: userStatus;
-// }
+// Models
+import { userStatus, selectUser, userLogout } from "../models/User";
+
+// UI
+import { Typography, Container, Button } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Acount: VFC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const isLogined: boolean = Cookies.get('isLogined') === '1' ? true : false;
   const userStatus: userStatus = useAppSelector(selectUser);
   const userInfo = userStatus.userData;
   const logout = () => {
@@ -22,17 +21,17 @@ const Acount: VFC = () => {
     history.push("/");
   }
 
-  // useEffect(() => {
-  //   if (!isLogined) {
-  //     history.push("/login");
-  //   }
-  // }, [userStatus]);
-
   return (
     <Container sx={{ pb: 20, pt: 10 }}>
       {userInfo? 
         <>
-          <h1>Account: {userInfo.username}</h1>
+          <h1></h1>
+          <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
+            Welcome {userInfo.username} !
+          </Typography>
+          <Typography variant="h6" component="p" sx={{ flexGrow: 1, my: 4, px: 2 }}>
+            Email: {userInfo.email}
+          </Typography>
           <Button variant="contained" startIcon={<LogoutIcon />} sx={{ m:1, p: 1, width: 120 }} onClick={logout}>Logout</Button>
         </>
       : null}

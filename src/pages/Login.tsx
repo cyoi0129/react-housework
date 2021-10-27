@@ -1,11 +1,17 @@
-import { VFC, useState, SyntheticEvent, FormEvent } from "react";
+// Basic Library
+import { VFC, FormEvent } from "react";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { useHistory } from "react-router-dom";
+import { langSet } from "../config";
+
+// Models
 import { loginData, selectUser, userLogin } from "../models/User";
+
+// UI
 import { createTheme, ThemeProvider, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-const Login:VFC = () => {
+const Login: VFC = () => {
   const theme = createTheme();
   const history = useHistory();
   const dispatch = useAppDispatch();
@@ -17,6 +23,11 @@ const Login:VFC = () => {
     const loginInfo:loginData = {username: String(data.get('user')), password: String(data.get('password'))};
     dispatch(userLogin(loginInfo));
   };
+
+  const toRegister = (event: any) => {
+    event.preventDefault();
+    history.push('/register');
+  }
 
   return (
     <Box sx={{ 
@@ -84,7 +95,7 @@ const Login:VFC = () => {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2" onClick={toRegister}>
                     {"Create an account"}
                   </Link>
                 </Grid>

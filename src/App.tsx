@@ -1,19 +1,31 @@
-import { VFC, useEffect, useState, createContext } from "react";
+// Basic Library
+import { VFC, useEffect, createContext } from "react";
 import { useHistory } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import { useAppSelector, useAppDispatch } from './app/hooks';
 import Cookies from 'js-cookie';
+import { langSet } from "./config";
+
+// Pages & Components
 import { Home, Login, Masters, Master, Task, Register, Account } from "./pages";
 import { Header, Footer, ScrollToTop } from './components';
+
+// Models
+import { getUserData, selectUser, userStatus, setLoginStatus } from "./models/User";
+import { getMasterList } from "./models/Master";
+import { changeNavigation } from './models/Navigator';
+
+// UI
 import './App.css';
-import { getUserData, selectUser, userStatus, setLoginStatus, userLogout } from "./models/User";
-import { getMasterList, selectMaster, masterList } from "./models/Master";
+
+export const UserContext = createContext({} as {
+  user: userStatus;
+})
 
 const App: VFC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const userStatus: userStatus = useAppSelector(selectUser);
-  const masterStatus = useAppSelector(selectMaster);
   const isLogined: boolean = Cookies.get('isLogined') === '1' ? true : false;
 
   useEffect(() => {
@@ -22,25 +34,29 @@ const App: VFC = () => {
       dispatch(getMasterList());
       dispatch(setLoginStatus());
       history.push("/");
+      dispatch(changeNavigation(0));
     } else {
       history.push("/login");
+      dispatch(changeNavigation(3));
     }
   }, [isLogined, dispatch]);
 
   return (
     <>
-      <ScrollToTop />
-      <Header isLogined={isLogined} />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/account" component={Account} />
-        <Route path="/masters" component={Masters} />
-        <Route path="/master/:masterID" component={Master} />
-        <Route path="/task" component={Task} />
-      </Switch>
-      <Footer />
+      <UserContext.Provider value={{ user: userStatus }}>
+        <ScrollToTop />
+        <Header isLogined={isLogined} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/account" component={Account} />
+          <Route path="/masters" component={Masters} />
+          <Route path="/master/:masterID" component={Master} />
+          <Route path="/task" component={Task} />
+        </Switch>
+        <Footer />
+      </UserContext.Provider>
     </>
   );
 }

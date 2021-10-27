@@ -1,15 +1,22 @@
-import { VFC, useEffect, useState } from "react";
+// Basic Library
+import { VFC, useEffect } from "react";
+import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { subDays } from 'date-fns';
+import { convertDate, langSet } from "../config";
+
+// Components
 import { PieChart, BarChart, LineChart } from '../components'
+
+// Models
+import { selectTask, taskList, taskObject, getWeeklyTaskList, getMonthlyTaskList } from "../models/Task";
+import { selectMaster, masterList } from "../models/Master";
+
+// UI
 import { Grid, Typography, Container, Paper, Box } from '@mui/material';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
-import { getTaskList, selectTask, taskList, taskObject, changeTaskList, deleteTask, getWeeklyTaskList, getMonthlyTaskList } from "../models/Task";
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { selectMaster, masterList } from "../models/Master";
-import { subDays } from 'date-fns';
-import { convertDate } from "../config";
 
-const Home = () => {
+const Home: VFC = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getWeeklyTaskList());

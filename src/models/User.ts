@@ -35,6 +35,9 @@ const initialState: userStatus = {
   userData: null,
 };
 
+const getCookieToken = Cookies.get('csrftoken');
+const token: string = getCookieToken? getCookieToken : '';
+
 export const userLogin = createAsyncThunk(
   "user/userLogin",
     async (loginData: loginData) => {
@@ -46,6 +49,18 @@ export const userLogin = createAsyncThunk(
           password: loginData.password,
         }),
         headers: new Headers({ 'Content-type': 'application/json' })
+      }).then((res) => res.json());
+      return response;
+    }
+);
+
+export const userLogout = createAsyncThunk(
+  "user/userLogout",
+    async () => {
+      const response = await fetch(apiURL + "rest-auth/logout/", {
+        method: 'POST',
+        credentials: 'include',
+        headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
       }).then((res) => res.json());
       return response;
     }
@@ -86,13 +101,6 @@ const userSlice = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
-    userLogout: (state) => {
-      state.isLogined = false;
-      state.userData = null;
-      Cookies.remove('isLogined');
-      Cookies.remove('csrftoken');
-      Cookies.remove('sessionid');
-    },
     setLoginStatus: (state) => {
       state.isLogined = true;
     }
@@ -103,7 +111,13 @@ const userSlice = createSlice({
       Cookies.set('isLogined', '1', { expires: 1 });
       state.token = action.payload.key;
     });
-
+    builder.addCase(userLogout.fulfilled, (state, action) => {
+      state.isLogined = false;
+      state.userData = null;
+      Cookies.remove('isLogined');
+      Cookies.remove('csrftoken');
+      Cookies.remove('sessionid');
+    });
     builder.addCase(userRegister.fulfilled, (state, action) => {
       state.isLogined = true;
       Cookies.set('isLogined', '1', { expires: 1 });
@@ -117,6 +131,12 @@ const userSlice = createSlice({
       // エラー画面表示
     });
     builder.addCase(userLogin.rejected, () => {
+      // エラー画面表示
+    });
+    builder.addCase(userLogout.pending, () => {
+      // エラー画面表示
+    });
+    builder.addCase(userLogout.rejected, () => {
       // エラー画面表示
     });
     builder.addCase(userRegister.pending, () => {
@@ -136,4 +156,4 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const selectUser = (state: RootState) => state.user;
-export const { userLogout, setLoginStatus } = userSlice.actions;
+export const { setLoginStatus } = userSlice.actions;

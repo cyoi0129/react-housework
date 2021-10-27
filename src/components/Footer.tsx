@@ -1,7 +1,14 @@
+// Basic Library
 import { VFC, useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
+import Cookies from 'js-cookie';
+import { langSet } from "../config";
+
+// Models
 import { changeNavigation, selectNavigation } from '../models/Navigator';
+
+// UI
 import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -14,10 +21,23 @@ const Footer: VFC = () => {
   const currentPage: number = useAppSelector(selectNavigation).currentPage;
   const [index, setIndex] = useState(currentPage);
   const path = ["/", "/task", "/masters", "/account"];
+  const isLogined: boolean = Cookies.get('isLogined') === '1' ? true : false;
   
   useEffect(()=>{
     setIndex(currentPage)
   },[currentPage]);
+
+  const changePage = (targetPage: number) => {
+    if (isLogined) {
+      setIndex(targetPage);
+      dispatch(changeNavigation(targetPage));
+      history.push(path[targetPage]);
+    } else {
+      setIndex(3);
+      dispatch(changeNavigation(3));
+      history.push('/login');
+    }
+  }
 
   return (
     <Box>
@@ -27,17 +47,12 @@ const Footer: VFC = () => {
           position: "fixed",
           width: "100%",
           bottom: 0,
-          paddingBottom: 3,
-          height: 80,
+          minHeight: 80,
           zIndex: 10,
         }}
         showLabels
         value={index}
-        onChange={(event, newIndex) => {
-        setIndex(newIndex);
-        dispatch(changeNavigation(newIndex));
-        history.push(path[newIndex]);
-      }}
+        onChange={(event, newIndex) => changePage(newIndex)}
       >
         <BottomNavigationAction label="Home" icon={<HomeIcon />} />
         <BottomNavigationAction label="Task" icon={<EditIcon />} />
