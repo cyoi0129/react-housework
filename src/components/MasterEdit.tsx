@@ -68,7 +68,7 @@ const MasterEdit: VFC<Props> = (Props) => {
         noValidate
         autoComplete="off"
       >
-        <TextField id="outlined-basic" label="Name" variant="outlined" value={name} onChange={(event) => setName(event.target.value)} />
+        <TextField id="outlined-basic" label={langSet.master.name} variant="outlined" value={name} onChange={(event) => setName(event.target.value)} />
       </Box>
       <Box sx={{
         '& > :not(style)': { m: 1, pb: 2, maxWidth: '40ch' },
