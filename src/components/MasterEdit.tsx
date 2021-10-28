@@ -52,17 +52,18 @@ const MasterEdit: VFC<Props> = (Props) => {
       history.push("/masters");
     }
   }
+
    return (
     <>
       <Box sx={{
-        '& > :not(style)': { m: 1, pb: 2, width: '40ch' },
+        '& > :not(style)': { m: 1, pb: 2, maxWidth: '40ch' },
       }}>
         <Typography component="h1" variant="h5">ID: {master.id}</Typography>
       </Box>
       <Box
         component="form"
         sx={{
-          '& > :not(style)': { m: 1, pb: 2, width: '40ch' },
+          '& > :not(style)': { m: 1, pb: 2, maxWidth: '40ch' },
         }}
         noValidate
         autoComplete="off"
@@ -70,7 +71,7 @@ const MasterEdit: VFC<Props> = (Props) => {
         <TextField id="outlined-basic" label="Name" variant="outlined" value={name} onChange={(event) => setName(event.target.value)} />
       </Box>
       <Box sx={{
-        '& > :not(style)': { m: 1, pb: 2, width: '40ch' },
+        '& > :not(style)': { m: 1, pb: 2, maxWidth: '40ch' },
       }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">{langSet.master.type}</InputLabel>
@@ -81,14 +82,14 @@ const MasterEdit: VFC<Props> = (Props) => {
             label="Type"
             onChange={handleTypeChange}
           >
-            {masterSelection.map((master, index) => 
-              <MenuItem value={master} key={index}>{master}</MenuItem>
-            )}
+            {
+              Object.entries(langSet.common.category).map(([key, value]) => <MenuItem value={key} key={key}>{value}</MenuItem>)
+            }
           </Select>
         </FormControl>
       </Box>
       <Box sx={{
-        '& > :not(style)': { m: 1, pb: 2, width: '40ch' },
+        '& > :not(style)': { m: 1, pb: 2, maxWidth: '40ch' },
       }}>
         <Slider
           value={point}
