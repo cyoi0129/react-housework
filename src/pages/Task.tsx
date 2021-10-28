@@ -39,7 +39,7 @@ const Task = () => {
 
   const addNewTask = () => {
     const idArray: number[] = tasks.map(task => task.id);
-    const currentID: number = Math.max(...idArray);
+    const currentID: number = tasks.length > 0 ? Math.max(...idArray) : 0;
     const newID: number = currentID + 1;
     const newTask: taskObject = {
       id: newID,
@@ -58,6 +58,7 @@ const Task = () => {
 
   const setTask = (newTask: taskObject) => {
     let tempTaskList = tasks.filter(task => task.id !== newTask.id);
+    console.log(tempTaskList);
     tempTaskList.push(newTask);
     tempTaskList.sort((a, b) => {
       if (a.id < b.id) return -1;
@@ -83,6 +84,8 @@ const Task = () => {
         dispatch(deleteTask(target));
       })
     }
+    dispatch(getTaskList(dateObj.dateString));
+    setTasks(initTaskList.tasks);
   }
 
   useEffect(() => {
@@ -92,7 +95,7 @@ const Task = () => {
   useEffect(() => {
     setTasks([]);
     dispatch(getTaskList(dateObj.dateString));
-  }, [date]);
+  }, [date, dispatch]);
 
   return (
     <Container maxWidth="sm" sx={{ pt: 10, pb: 20 }}>
