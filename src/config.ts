@@ -1,11 +1,16 @@
+// Production switch
+export const isProduction = false;
 const devURL: string = "http://127.0.0.1:8000/";
 const prodURL: string = "";
+export const apiURL: string = isProduction ? prodURL : devURL;
 
-export const env = false;
-export const apiURL: string = env ? prodURL : devURL;
+// Static switch
+export const isStatic = true;
 
+// Master Selection
 export const masterSelection = ['cook', 'bath', 'delivery', 'clean', '‎laundry', 'sleep', 'wash', 'child', 'others'];
 
+// Date format process object
 export interface dateObject {
   dateOrigin: Date,
   dateString: string,
@@ -24,11 +29,13 @@ export function convertDate (date: Date | null): dateObject {
   return dateResult;
 }
 
+// English ver text set
 const enSet = {
   common: {
     site: 'Housework Manager',
     dad: 'Dad',
     mom: 'Mom',
+    message: 'Sucessed!',
     menu: {
       home: 'Home',
       task: 'Task',
@@ -99,16 +106,18 @@ const enSet = {
   }
 } 
 
+// Japanese ver text set
 const jpSet = {
   common: {
     site: '家事マネージャー',
     dad: 'パパ',
     mom: 'ママ',
+    message: '成功しました',
     menu: {
       home: 'ホーム',
       task: 'タスク',
-      master: 'マスター',
-      account: 'アカウント'
+      master: '項目',
+      account: 'ユーザー'
     },
     category: {
       cook: '料理',
@@ -137,14 +146,14 @@ const jpSet = {
   },
   task: {
     date: '日付を選んでください',
-    master: 'マスター',
-    person: '担当者',
+    master: '項目',
+    person: '担当',
     add: '追加',
     save: '保存',
   },
   master: {
-    add: 'マスターを追加',
-    name: 'マスター名',
+    add: '項目を追加',
+    name: '項目名',
     type: '種類',
     point: 'ポイント数',
     save: '保存'
@@ -174,6 +183,7 @@ const jpSet = {
   }
 }
 // const browserLang = (window.navigator.languages && window.navigator.languages[0]) || window.navigator.language || window.navigator.userLanguage || window.navigator.browserLanguage;
-const browserLang = (window.navigator.languages && window.navigator.languages[0]) || window.navigator.language;
 
+// Language select switch
+const browserLang = (window.navigator.languages && window.navigator.languages[0]) || window.navigator.language;
 export const langSet = browserLang === 'ja-JP' ? jpSet : enSet;

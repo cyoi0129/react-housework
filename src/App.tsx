@@ -11,9 +11,8 @@ import { Home, Login, Masters, Master, Task, Register, Account } from "./pages";
 import { Header, Footer, ScrollToTop } from './components';
 
 // Models
-import { getUserData, selectUser, userStatus, setLoginStatus } from "./models/User";
-import { getMasterList } from "./models/Master";
-import { changeNavigation } from './models/Navigator';
+import { getUserData, selectUser, setLoginStatus, getMasterList, changeNavigation } from "./models";
+import { userStatus } from './models/types';
 
 // UI
 import './App.css';

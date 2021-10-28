@@ -4,8 +4,8 @@ import { useAppSelector } from '../app/hooks';
 import { langSet } from "../config";
 
 // Models
-import { taskObject } from "../models/Task";
-import { selectMaster, masterObject } from "../models/Master";
+import { selectMaster } from "../models";
+import { taskObject, masterObject } from "../models/types";
 import { TaskContext } from "../pages/Task";
 
 // UI

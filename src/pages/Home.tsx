@@ -8,8 +8,8 @@ import { convertDate, langSet } from "../config";
 import { PieChart, BarChart, LineChart } from '../components'
 
 // Models
-import { selectTask, taskList, taskObject, getWeeklyTaskList, getMonthlyTaskList } from "../models/Task";
-import { selectMaster, masterList } from "../models/Master";
+import { selectTask, getWeeklyTaskList, getMonthlyTaskList, selectMaster } from "../models";
+import { taskList, taskObject, masterList } from "../models/types";
 
 // UI
 import { Grid, Typography, Container, Paper, Box } from '@mui/material';

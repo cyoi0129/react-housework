@@ -2,21 +2,7 @@ import { createAsyncThunk, createSlice, createSelector } from "@reduxjs/toolkit"
 import { RootState } from "../app/store";
 import { apiURL } from "../config";
 import Cookies from 'js-cookie';
-
-export interface masterData {
-  user: number;
-  type: string;
-  name: string;
-  point: number;
-}
-
-export interface masterObject extends masterData {
-  id: number | null;
-}
-
-export interface masterList {
-  masters: masterObject[];
-}
+import { masterList, masterData, masterObject } from './types';
 
 const initialState: masterList = {
   masters: []

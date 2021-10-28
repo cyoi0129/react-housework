@@ -5,7 +5,7 @@ import { useAppDispatch } from '../app/hooks';
 import { langSet } from "../config";
 
 // Models
-import { changeNavigation } from '../models/Navigator';
+import { changeNavigation } from '../models';
 
 // UI
 import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';

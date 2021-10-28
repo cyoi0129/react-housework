@@ -8,7 +8,8 @@ import { langSet } from "../config";
 import { MasterView } from "../components";
 
 // Models
-import { selectMaster, masterObject } from "../models/Master";
+import { selectMaster } from "../models";
+import { masterObject } from "../models/types";
 
 // UI
 import { Container, Grid, List, Button, ListItem } from '@mui/material';

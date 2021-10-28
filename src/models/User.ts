@@ -2,32 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { apiURL } from "../config";
 import Cookies from 'js-cookie';
+import { userStatus, loginData, registerData } from './types';
 
-export interface userData {
-  pk: number;
-  username: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-}
-
-export interface loginData {
-  username: string;
-  password: string;
-}
-
-export interface registerData {
-  username: string;
-  email: string;
-  password1: string;
-  password2: string;
-}
-
-export interface userStatus {
-  isLogined: boolean;
-  token: string;
-  userData: userData | null;
-}
 
 const initialState: userStatus = {
   isLogined: false,

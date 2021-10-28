@@ -7,8 +7,8 @@ import { useRouteMatch } from "react-router";
 import { MasterEdit } from '../components';
 
 // Models
-import { selectMaster, masterObject } from "../models/Master";
-import { userStatus } from "../models/User";
+import { selectMaster } from "../models";
+import { userStatus, masterObject } from "../models/types";
 import { UserContext } from "../App";
 
 // UI

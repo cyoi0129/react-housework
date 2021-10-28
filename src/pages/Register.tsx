@@ -1,11 +1,15 @@
 // Basic Library
-import { VFC, FormEvent } from "react";
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { VFC, FormEvent, useState } from "react";
+import { useAppDispatch } from '../app/hooks';
 import { useHistory } from "react-router-dom";
 import { langSet } from "../config";
 
+// Components
+import { Overlay, Notification } from "../components"
+
 // Models
-import { selectUser, userRegister, registerData } from "../models/User";
+import { userRegister } from "../models";
+import { registerData } from "../models/types";
 
 // UI
 import { createTheme, ThemeProvider, Avatar, Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
@@ -15,13 +19,21 @@ const Register: VFC = () => {
   const theme = createTheme();
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const userStatus = useAppSelector(selectUser);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [snackBar, setSnackBar] = useState<boolean>(false);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registerInfo:registerData = {username: String(data.get('user')), email: String(data.get('email')), password1: String(data.get('password')), password2: String(data.get('password_confirm'))};
     dispatch(userRegister(registerInfo));
+    setLoading(true);
+    setTimeout(() => {
+      setSnackBar(true);
+    }, 1000);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
 
   const toLogin = (event: any) => {
@@ -114,6 +126,8 @@ const Register: VFC = () => {
           </Box>
         </Container>
       </ThemeProvider>
+      <Overlay isDisplay={loading} />
+      <Notification isDisplay={snackBar} />
     </Box>
   );
 }

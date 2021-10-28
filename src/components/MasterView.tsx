@@ -3,7 +3,7 @@ import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
 
 // Models
-import { masterObject } from "../models/Master";
+import { masterObject } from "../models/types";
 
 // UI
 import { Grid, ListItem, ListItemText, ListItemAvatar, Avatar, ListItemIcon, Divider, ListItemButton } from '@mui/material';

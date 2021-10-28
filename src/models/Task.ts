@@ -3,38 +3,7 @@ import { RootState } from "../app/store";
 import { apiURL, convertDate } from "../config";
 import Cookies from 'js-cookie';
 import { subMonths, subWeeks, subDays } from 'date-fns';
-
-export interface taskData {
-  user: number;
-  master: number;
-  person: string;
-  date: string;
-}
-
-export interface existTask extends taskData {
-  id: number;
-}
-
-export interface taskObject extends taskData {
-  id: number;
-  update: boolean;
-}
-
-export interface personTaskList {
-  week: taskObject[] | [];
-  month: taskObject[] | [];
-}
-
-export interface taskList {
-  tasks: taskObject[] | [];
-  dad: personTaskList;
-  mom: personTaskList;
-}
-
-export interface changedTaskList {
-  editTaskList: taskObject[] | [];
-  newTaskList: taskObject[] | [];
-}
+import { taskList, changedTaskList, taskData, existTask, taskObject } from './types';
 
 const initialState: taskList = {
   tasks: [],

@@ -5,7 +5,8 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { langSet } from "../config";
 
 // Models
-import { userStatus, selectUser, userLogout } from "../models/User";
+import { selectUser, userLogout } from "../models";
+import { userStatus } from "../models/types";
 
 // UI
 import { Typography, Container, Button } from '@mui/material';

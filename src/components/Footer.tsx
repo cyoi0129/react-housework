@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { langSet } from "../config";
 
 // Models
-import { changeNavigation, selectNavigation } from '../models/Navigator';
+import { changeNavigation, selectNavigation } from '../models';
 
 // UI
 import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
