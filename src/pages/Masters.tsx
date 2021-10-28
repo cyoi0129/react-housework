@@ -39,7 +39,7 @@ const Masters: VFC = () => {
             onClick={addMaster}
             startIcon={<AddIcon />}
           >
-          Add a new master
+          {langSet.master.add}
         </Button>
         </Grid>
       </Grid>

@@ -43,7 +43,7 @@ const Header: VFC<Props> = (Props) => {
             <CleaningServicesIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Housework Manager
+            {langSet.common.site}
           </Typography>
           {
             isLogined ? <IconButton size="large" color="inherit" aria-label="login" onClick={toAccount}>

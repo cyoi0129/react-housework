@@ -92,12 +92,12 @@ const Home: VFC = () => {
       <img src="/mv.jpg" alt="" width="100%" />
       </Box>
       <Container sx={{ pb: 16, pt: 4 }}>
-        <Typography variant="h4" component="h2" sx={{ paddingBlock: 4 }}>Workload Report</Typography>
+        <Typography variant="h4" component="h2" sx={{ paddingBlock: 4 }}>{langSet.home.title1}</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <Paper>
               <Box sx={{ p: 4 }}>
-                <Typography variant="h6" component="h3" sx={{ pb: 2 }}>Last week summary</Typography>
+                <Typography variant="h6" component="h3" sx={{ pb: 2 }}>{langSet.home.sub1}</Typography>
                 <PieChart dad={pieData.dad_week_points} mom={pieData.mom_week_points} />
               </Box>
             </Paper>
@@ -105,14 +105,14 @@ const Home: VFC = () => {
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <Paper>
               <Box sx={{ p: 4 }}>
-                <Typography variant="h6" component="h3" sx={{ pb: 2 }}>Last month summary</Typography>
+                <Typography variant="h6" component="h3" sx={{ pb: 2 }}>{langSet.home.sub2}</Typography>
                 <PieChart dad={pieData.dad_month_points} mom={pieData.mom_month_points} />
               </Box>
             </Paper>
           </Grid>
         </Grid>
-        <Typography variant="h4" component="h2" sx={{ pt: 8, pb: 4 }}>Point Summary</Typography>
-        <Typography variant="h6" component="h3"><MaleIcon />Dad's Summary</Typography>
+        <Typography variant="h4" component="h2" sx={{ pt: 8, pb: 4 }}>{langSet.home.title2}</Typography>
+        <Typography variant="h6" component="h3"><MaleIcon />{langSet.home.sub3}</Typography>
         <Grid container spacing={2} sx={{mb:8}}>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <BarChart chartData={lineData.dad_points} />
@@ -121,7 +121,7 @@ const Home: VFC = () => {
             <LineChart chartData={lineData.dad_tasks} />
           </Grid>
         </Grid>
-        <Typography variant="h6" component="h3"><FemaleIcon />Mom's Summary</Typography>
+        <Typography variant="h6" component="h3"><FemaleIcon />{langSet.home.sub4}</Typography>
         <Grid container spacing={2} sx={{mb:8}}>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <BarChart chartData={lineData.mom_points} />

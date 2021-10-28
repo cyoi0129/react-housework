@@ -23,7 +23,7 @@ const BarChart: VFC <Props> = (Props) => {
     labels: weekLabel,
     datasets: [
       {
-        label: 'Points got last week',
+        label: langSet.common.chart.bar,
         data: chartData,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',

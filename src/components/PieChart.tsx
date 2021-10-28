@@ -13,10 +13,11 @@ const PieChart: VFC <Props> = (Props) => {
   const { dad, mom } = Props;
   const data = {
     // x 軸のラベル
-    labels: ['Dad', 'Mom'],
+
+    labels: [langSet.common.dad, langSet.common.mom],
     datasets: [
       {
-        label: 'Last week summary',
+        label: langSet.common.chart.pie,
         // データの値
         data: [dad, mom],
         // グラフの背景色

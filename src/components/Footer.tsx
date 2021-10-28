@@ -54,10 +54,10 @@ const Footer: VFC = () => {
         value={index}
         onChange={(event, newIndex) => changePage(newIndex)}
       >
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Task" icon={<EditIcon />} />
-        <BottomNavigationAction label="Master" icon={<CategoryIcon />} />
-        <BottomNavigationAction label="Account" icon={<PersonIcon />} />
+        <BottomNavigationAction label={langSet.common.menu.home} icon={<HomeIcon />} />
+        <BottomNavigationAction label={langSet.common.menu.task} icon={<EditIcon />} />
+        <BottomNavigationAction label={langSet.common.menu.master} icon={<CategoryIcon />} />
+        <BottomNavigationAction label={langSet.common.menu.account} icon={<PersonIcon />} />
       </BottomNavigation>
     </Box>
   );

@@ -20,7 +20,7 @@ const Login: VFC = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const loginInfo:loginData = {username: String(data.get('user')), password: String(data.get('password'))};
+    const loginInfo: loginData = { username: String(data.get('user')), password: String(data.get('password')) };
     dispatch(userLogin(loginInfo));
   };
 
@@ -30,12 +30,12 @@ const Login: VFC = () => {
   }
 
   return (
-    <Box sx={{ 
-        backgroundImage: "url('/login.jpg')",
-        backgroundPosition: 'bottom center',
-        minHeight: '100vh',
-        pt: 12
-      }}>
+    <Box sx={{
+      backgroundImage: "url('/login.jpg')",
+      backgroundPosition: 'bottom center',
+      minHeight: '100vh',
+      pt: 12
+    }}>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -53,7 +53,7 @@ const Login: VFC = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Login
+              {langSet.login.title}
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
@@ -61,7 +61,7 @@ const Login: VFC = () => {
                 required
                 fullWidth
                 id="user"
-                label="User"
+                label={langSet.login.user}
                 name="user"
                 autoComplete="user"
                 autoFocus
@@ -71,14 +71,14 @@ const Login: VFC = () => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label={langSet.login.password}
                 type="password"
                 id="password"
                 autoComplete="current-password"
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label={langSet.login.remember}
               />
               <Button
                 type="submit"
@@ -86,17 +86,17 @@ const Login: VFC = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                {langSet.login.signin}
               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
-                    Forgot password
+                    {langSet.login.forgot}
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="#" variant="body2" onClick={toRegister}>
-                    {"Create an account"}
+                    {langSet.login.create}
                   </Link>
                 </Grid>
               </Grid>

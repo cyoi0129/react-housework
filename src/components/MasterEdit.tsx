@@ -73,7 +73,7 @@ const MasterEdit: VFC<Props> = (Props) => {
         '& > :not(style)': { m: 1, pb: 2, width: '40ch' },
       }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Type</InputLabel>
+          <InputLabel id="demo-simple-select-label">{langSet.master.type}</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -99,7 +99,7 @@ const MasterEdit: VFC<Props> = (Props) => {
           min={5}
           max={50}
         />
-        <Typography component="p" variant="body2">Point: {point}</Typography>
+        <Typography component="p" variant="body2">{langSet.master.point + ': ' + point}</Typography>
       </Box>
       <Box sx={{
         '& > :not(style)': { m: 1, width: '25ch' },
@@ -111,7 +111,7 @@ const MasterEdit: VFC<Props> = (Props) => {
           sx={{ mt: 3, mb: 2, pt: 1, pb: 1, width: 120 }}
           onClick={saveMaster}
         >
-          Save
+          {langSet.master.save}
         </Button>
       </Box>
     </>

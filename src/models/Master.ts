@@ -1,6 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { createAsyncThunk, createSlice, createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { apiURL } from "../config";
 import Cookies from 'js-cookie';

@@ -1,6 +1,8 @@
 const devURL: string = "http://127.0.0.1:8000/";
-const ProdURL: string = "";
-export const apiURL: string = devURL;
+const prodURL: string = "";
+
+export const env = false;
+export const apiURL: string = env ? prodURL : devURL;
 
 export const masterSelection = ['cook', 'bath', 'delivery', 'clean', '‎laundry', 'sleep', 'wash', 'child', 'others'];
 
@@ -26,11 +28,29 @@ const enSet = {
   common: {
     site: 'Housework Manager',
     dad: 'Dad',
-    mom: 'Mom'
-  },
-  chart: {
-    task: 'Tasks done last week',
-    point: 'Points got last week'
+    mom: 'Mom',
+    menu: {
+      home: 'Home',
+      task: 'Task',
+      master: 'Master',
+      account: 'Account'
+    },
+    category: {
+      cook: 'Cook',
+      bath: 'Bath',
+      delivery: 'Delivery',
+      clean: 'Clean',
+      laundry: '‎Laundry',
+      sleep: 'Sleep',
+      wash: 'Wash',
+      child: 'Child',
+      others: 'Others'
+    },
+    chart: {
+      pie: 'Summary Report',
+      line: 'Tasks done last week',
+      bar: 'Points got last week'
+    }
   },
   home: {
     title1: 'Workload Report',
@@ -48,17 +68,6 @@ const enSet = {
     save: 'Save',
   },
   master: {
-    category: {
-      cook: 'Cook',
-      bath: 'Bath',
-      delivery: 'Delivery',
-      clean: 'Clean',
-      laundry: '‎Laundry',
-      sleep: 'Sleep',
-      wash: 'Wash',
-      child: 'Child',
-      others: 'Others'
-    },
     add: 'Add a new master',
     name: 'Name',
     type: 'Type',
@@ -67,6 +76,7 @@ const enSet = {
   },
   account: {
     welcome: 'Welcome',
+    email: 'Email',
     logout: 'Logout'
   },
   login: {
@@ -89,4 +99,81 @@ const enSet = {
   }
 } 
 
-export const langSet = enSet;
+const jpSet = {
+  common: {
+    site: '家事マネージャー',
+    dad: 'パパ',
+    mom: 'ママ',
+    menu: {
+      home: 'ホーム',
+      task: 'タスク',
+      master: 'マスター',
+      account: 'アカウント'
+    },
+    category: {
+      cook: '料理',
+      bath: '風呂',
+      delivery: '送迎',
+      clean: '掃除',
+      laundry: '‎洗濯',
+      sleep: '就寝',
+      wash: '洗い物',
+      child: '子供',
+      others: 'その他'
+    },
+    chart: {
+      pie: 'サマリー',
+      line: '先週のタスク実績',
+      bar: '先週のポイント実績'
+    }
+  },
+  home: {
+    title1: '家事担当バランス',
+    title2: 'ポイントサマリー',
+    sub1: '先週のサマリー',
+    sub2: '先月のサマリー',
+    sub3: 'パパのサマリー',
+    sub4: 'ママのサマリー',
+  },
+  task: {
+    date: '日付を選んでください',
+    master: 'マスター',
+    person: '担当者',
+    add: '追加',
+    save: '保存',
+  },
+  master: {
+    add: 'マスターを追加',
+    name: 'マスター名',
+    type: '種類',
+    point: 'ポイント数',
+    save: '保存'
+  },
+  account: {
+    welcome: 'ようこそ',
+    email: 'メールアドレス',
+    logout: 'ログアウト'
+  },
+  login: {
+    title: 'ログイン',
+    user: 'ユーザー名',
+    password: 'パスワード',
+    remember: 'パスワードを保存',
+    signin: 'ログイン',
+    forgot: 'パスワードを忘れた',
+    create: 'アカウントを作成'
+  },
+  register: {
+    title: '登録',
+    user: 'ユーザー名',
+    email: 'メールアドレス',
+    password1: 'パスワード',
+    password2: 'パスワード確認',
+    create: '作成',
+    already: 'すでにアカウントを持っている'
+  }
+}
+// const browserLang = (window.navigator.languages && window.navigator.languages[0]) || window.navigator.language || window.navigator.userLanguage || window.navigator.browserLanguage;
+const browserLang = (window.navigator.languages && window.navigator.languages[0]) || window.navigator.language;
+
+export const langSet = browserLang === 'ja-JP' ? jpSet : enSet;

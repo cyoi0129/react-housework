@@ -98,7 +98,7 @@ const Task = () => {
     <Container maxWidth="sm" sx={{ pt: 10, pb: 20 }}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
-          label="Select Date"
+          label={langSet.task.date}
           value={date}
           onChange={(newDate) => {
             setDate(newDate);
@@ -124,8 +124,8 @@ const Task = () => {
           </List>
         </Grid>
       </Grid>
-      <Button variant="contained" startIcon={<AddIcon />} sx={{ m: 1, p: 1, width: 120 }} onClick={addNewTask}>Add</Button>
-      <Button variant="contained" startIcon={<SaveIcon />} sx={{ m: 1, p: 1, width: 120 }} onClick={saveTasks}>Save</Button>
+      <Button variant="contained" startIcon={<AddIcon />} sx={{ m: 1, p: 1, width: 120 }} onClick={addNewTask}>{langSet.task.add}</Button>
+      <Button variant="contained" startIcon={<SaveIcon />} sx={{ m: 1, p: 1, width: 120 }} onClick={saveTasks}>{langSet.task.save}</Button>
     </Container>
   );
 }

@@ -23,7 +23,7 @@ const LineChart: VFC <Props> = (Props) => {
     labels: weekLabel,
     datasets: [
       {
-        label: 'Tasks done last week',
+        label: langSet.common.chart.line,
         data: chartData,
         fill: false,
         backgroundColor: 'rgb(255, 99, 132)',

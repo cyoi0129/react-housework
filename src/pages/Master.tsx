@@ -2,7 +2,6 @@
 import { VFC, useContext } from "react";
 import { useAppSelector } from '../app/hooks';
 import { useRouteMatch } from "react-router";
-import { langSet } from "../config";
 
 // Components
 import { MasterEdit } from '../components';

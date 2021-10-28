@@ -27,12 +27,12 @@ const Acount: VFC = () => {
         <>
           <h1></h1>
           <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>
-            Welcome {userInfo.username} !
+            {langSet.account.welcome + userInfo.username} !
           </Typography>
           <Typography variant="h6" component="p" sx={{ flexGrow: 1, my: 4, px: 2 }}>
-            Email: {userInfo.email}
+            {langSet.account.email + ': ' + userInfo.email}
           </Typography>
-          <Button variant="contained" startIcon={<LogoutIcon />} sx={{ m:1, p: 1, width: 120 }} onClick={logout}>Logout</Button>
+          <Button variant="contained" startIcon={<LogoutIcon />} sx={{ m:1, p: 1, width: 120 }} onClick={logout}>{langSet.account.logout}</Button>
         </>
       : null}
     </Container>

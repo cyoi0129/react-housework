@@ -71,7 +71,7 @@ const TaskEdit: VFC = () => {
     <>
       <Grid item xs={7}>
         <FormControl fullWidth>
-          <InputLabel id="master-select-label">Master</InputLabel>
+          <InputLabel id="master-select-label">{langSet.task.master}</InputLabel>
           <Select
             labelId="master-select-label"
             value={master}
@@ -81,13 +81,13 @@ const TaskEdit: VFC = () => {
           >
             {masters !== [] ? masters.map((masterItem, index) =>
               <MenuItem key={index} value={masterItem.name}>{masterItem.name}</MenuItem>
-            ) : <MenuItem value='No Available Master'>No Available Master</MenuItem>}
+            ) : <MenuItem value='No Available Master'>-</MenuItem>}
           </Select>
         </FormControl>
       </Grid>
       <Grid item xs={4} sx={{ px: 1 }}>
         <FormControl fullWidth>
-          <InputLabel id="person-select-label">Person</InputLabel>
+          <InputLabel id="person-select-label">{langSet.task.person}</InputLabel>
           <Select
             labelId="person-select-label"
             value={person}
@@ -95,8 +95,8 @@ const TaskEdit: VFC = () => {
             onChange={handlePersonChange}
             id={String(task.id)}
           >
-            <MenuItem value="dad">Dad</MenuItem>
-            <MenuItem value="mom">Mom</MenuItem>
+            <MenuItem value="dad">{langSet.common.dad}</MenuItem>
+            <MenuItem value="mom">{langSet.common.mom}</MenuItem>
           </Select>
         </FormControl>
       </Grid>

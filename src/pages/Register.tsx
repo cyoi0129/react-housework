@@ -52,7 +52,7 @@ const Register: VFC = () => {
               <AccountCircleIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Register
+              {langSet.register.title}
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
@@ -60,7 +60,7 @@ const Register: VFC = () => {
                 required
                 fullWidth
                 id="user"
-                label="User"
+                label={langSet.register.user}
                 name="user"
                 autoComplete="user"
                 autoFocus
@@ -70,7 +70,7 @@ const Register: VFC = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email"
+                label={langSet.register.email}
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -80,7 +80,7 @@ const Register: VFC = () => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label={langSet.register.password1}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -90,7 +90,7 @@ const Register: VFC = () => {
                 required
                 fullWidth
                 name="password_confirm"
-                label="Password Confirm"
+                label={langSet.register.password2}
                 type="password"
                 id="password_confirm"
                 autoComplete="current-password"
@@ -101,12 +101,12 @@ const Register: VFC = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Create
+                {langSet.register.create}
               </Button>
               <Grid container>
                 <Grid item>
                   <Link href="#" variant="body2" onClick={toLogin}>
-                    {"Already have an account"}
+                  {langSet.register.already}
                   </Link>
                 </Grid>
               </Grid>

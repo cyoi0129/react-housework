@@ -17,6 +17,7 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import WashIcon from '@mui/icons-material/Wash';
 import TaskIcon from '@mui/icons-material/Task';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
+import { langSet } from "../config";
 
 export type Props = {
   master: masterObject;
@@ -25,47 +26,47 @@ export type Props = {
 const iconList = [
   {
     name: 'cook',
-    display: '料理',
+    display: langSet.common.category.cook,
     icon: <OutdoorGrillIcon />
   },
   {
     name: 'bath',
-    display: '風呂',
+    display: langSet.common.category.bath,
     icon: <BathtubIcon />
   },
   {
     name: 'delivery',
-    display: '送迎',
+    display: langSet.common.category.delivery,
     icon: <EscalatorWarningIcon />
   },
   {
     name: 'clean',
-    display: '掃除',
+    display: langSet.common.category.clean,
     icon: <CleaningServicesIcon />
   },
   {
     name: '‎laundry',
-    display: '洗濯',
+    display: langSet.common.category.laundry,
     icon: <DryCleaningIcon />
   },
   {
     name: 'sleep',
-    display: '就寝',
+    display: langSet.common.category.sleep,
     icon: <HotelIcon />
   },
   {
     name: 'wash',
-    display: '洗い物',
+    display: langSet.common.category.wash,
     icon: <WashIcon />
   },
   {
     name: 'child',
-    display: '子供',
+    display: langSet.common.category.child,
     icon: <ChildCareIcon />
   },
   {
     name: 'others',
-    display: 'その他',
+    display: langSet.common.category.others,
     icon: <TaskIcon />
   }
 ]
@@ -80,7 +81,7 @@ const MasterView: VFC<Props> = (Props) => {
   }
   const findDisplayName = (name: string) => {
     const targetDisplayName = iconList.find(icon => icon.name === name);
-    const resultDisplayName = targetDisplayName ? targetDisplayName.display : 'その他';
+    const resultDisplayName = targetDisplayName ? targetDisplayName.display : langSet.common.category.others;
     return resultDisplayName;
   }
   const toMaster = () => {
