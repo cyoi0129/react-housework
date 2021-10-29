@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import { useAppSelector, useAppDispatch } from './app/hooks';
 import Cookies from 'js-cookie';
-import { langSet } from "./config";
 
 // Pages & Components
 import { Home, Login, Masters, Master, Task, Register, Account } from "./pages";

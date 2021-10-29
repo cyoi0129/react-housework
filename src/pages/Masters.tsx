@@ -1,7 +1,7 @@
 // Basic Library
 import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppSelector } from '../app/hooks';
 import { langSet } from "../config";
 
 // Components
@@ -12,12 +12,11 @@ import { selectMaster } from "../models";
 import { masterObject } from "../models/types";
 
 // UI
-import { Container, Grid, List, Button, ListItem } from '@mui/material';
+import { Container, Grid, List, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 const Masters: VFC = () => {
   const history = useHistory();
-  const dispatch = useAppDispatch();
   const masterList = useAppSelector(selectMaster);
   const masters: masterObject[] = masterList.masters;
   const addMaster = () => {

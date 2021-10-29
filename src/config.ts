@@ -1,14 +1,7 @@
 // Production switch
+import { devURL, prodURL } from './env'
 export const isProduction = false;
-const devURL: string = "http://127.0.0.1:8000/";
-const prodURL: string = "";
 export const apiURL: string = isProduction ? prodURL : devURL;
-
-// Static switch
-export const isStatic = true;
-
-// Master Selection
-export const masterSelection = ['cook', 'bath', 'delivery', 'clean', '‎laundry', 'sleep', 'wash', 'child', 'others'];
 
 // Date format process object
 export interface dateObject {

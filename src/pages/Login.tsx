@@ -8,7 +8,7 @@ import { langSet } from "../config";
 import { Overlay, Notification } from "../components"
 
 // Models
-import { selectUser, userLogin } from "../models";
+import { userLogin } from "../models";
 import { loginData } from "../models/types";
 
 // UI
