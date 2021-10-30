@@ -2,7 +2,7 @@
 import { VFC, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { subDays } from 'date-fns';
-import { convertDate, langSet } from "../config";
+import { convertDate, langSet, imgPath } from "../config";
 
 // Components
 import { PieChart, BarChart, LineChart } from '../components'
@@ -89,7 +89,7 @@ const Home: VFC = () => {
   return (
     <>
       <Box sx={{ pt:7 }}>
-      <img src="/mv.jpg" alt="" width="100%" />
+      <img src={imgPath + 'mv.jpg'} alt="" width="100%" />
       </Box>
       <Container sx={{ pb: 16, pt: 4 }}>
         <Typography variant="h4" component="h2" sx={{ paddingBlock: 4 }}>{langSet.home.title1}</Typography>

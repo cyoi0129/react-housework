@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 // Pages & Components
 import { Home, Login, Masters, Master, Task, Register, Account } from "./pages";
 import { Header, Footer, ScrollToTop } from './components';
+import { webPath } from './config';
 
 // Models
 import { getUserData, selectUser, setLoginStatus, getMasterList, changeNavigation } from "./models";
@@ -31,10 +32,10 @@ const App: VFC = () => {
       dispatch(getUserData());
       dispatch(getMasterList());
       dispatch(setLoginStatus());
-      history.push("/");
+      history.push(webPath);
       dispatch(changeNavigation(0));
     } else {
-      history.push("/login");
+      history.push(webPath + 'login');
       dispatch(changeNavigation(3));
     }
   }, [isLogined, dispatch]);
@@ -45,13 +46,13 @@ const App: VFC = () => {
         <ScrollToTop />
         <Header isLogined={isLogined} />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/account" component={Account} />
-          <Route path="/masters" component={Masters} />
-          <Route path="/master/:masterID" component={Master} />
-          <Route path="/task" component={Task} />
+          <Route exact path={webPath} component={Home} />
+          <Route path={webPath + 'login'}  component={Login} />
+          <Route path={webPath + 'register'} component={Register} />
+          <Route path={webPath + 'account'} component={Account} />
+          <Route path={webPath + 'masters'} component={Masters} />
+          <Route path={webPath + 'master/:masterID'} component={Master} />
+          <Route path={webPath + 'task'} component={Task} />
         </Switch>
         <Footer />
       </UserContext.Provider>

@@ -2,7 +2,7 @@
 import { VFC, FormEvent, useState } from "react";
 import { useAppDispatch } from '../app/hooks';
 import { useHistory } from "react-router-dom";
-import { langSet } from "../config";
+import { langSet, webPath, imgPath } from "../config";
 
 // Components
 import { Overlay, Notification } from "../components"
@@ -39,12 +39,12 @@ const Login: VFC = () => {
 
   const toRegister = (event: any) => {
     event.preventDefault();
-    history.push('/register');
+    history.push(webPath + 'register');
   }
 
   return (
     <Box sx={{
-      backgroundImage: "url('/login.jpg')",
+      backgroundImage: `url('${imgPath}login.jpg')`,
       backgroundPosition: 'bottom center',
       minHeight: '100vh',
       pt: 12

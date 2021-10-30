@@ -1,6 +1,7 @@
 // Basic Library
 import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
+import { langSet, webPath } from "../config";
 
 // Models
 import { masterObject } from "../models/types";
@@ -17,7 +18,7 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import WashIcon from '@mui/icons-material/Wash';
 import TaskIcon from '@mui/icons-material/Task';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
-import { langSet } from "../config";
+
 
 export type Props = {
   master: masterObject;
@@ -85,7 +86,7 @@ const MasterView: VFC<Props> = (Props) => {
     return resultDisplayName;
   }
   const toMaster = () => {
-    history.push(`/master/${master.id}`);
+    history.push(`${webPath}master/${master.id}`);
   }
   return (
     <>

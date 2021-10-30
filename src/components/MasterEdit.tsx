@@ -3,6 +3,7 @@ import { VFC, useState, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 import { langSet } from "../config";
 import { useAppDispatch } from '../app/hooks';
+import { webPath } from '../config';
 
 // Components
 import { Overlay, Notification } from "../components"
@@ -60,7 +61,7 @@ const MasterEdit: VFC<Props> = (Props) => {
     }, 1000);
     setTimeout(() => {
       setLoading(false);
-      history.push("/masters");
+      history.push(webPath + 'masters');
     }, 2000);
   }
 

@@ -2,7 +2,7 @@
 import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
-import { langSet } from "../config";
+import { langSet, webPath } from "../config";
 
 // Models
 import { changeNavigation } from '../models';
@@ -22,11 +22,11 @@ const Header: VFC<Props> = (Props) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const toLogin = () => {
-    history.push("/login");
+    history.push(webPath + 'login');
     dispatch(changeNavigation(3));
   }
   const toAccount = () => {
-    history.push("/account");
+    history.push(webPath + 'account');
     dispatch(changeNavigation(3));
   }
   return (

@@ -2,7 +2,7 @@
 import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { langSet } from "../config";
+import { langSet, webPath } from "../config";
 
 // Models
 import { selectUser, userLogout } from "../models";
@@ -19,7 +19,7 @@ const Acount: VFC = () => {
   const userInfo = userStatus.userData;
   const logout = () => {
     dispatch(userLogout());
-    history.push("/");
+    history.push(webPath);
   }
 
   return (

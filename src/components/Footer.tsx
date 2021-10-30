@@ -3,7 +3,7 @@ import { VFC, useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import Cookies from 'js-cookie';
-import { langSet } from "../config";
+import { langSet, webPath } from "../config";
 
 // Models
 import { changeNavigation, selectNavigation } from '../models';
@@ -20,7 +20,7 @@ const Footer: VFC = () => {
   const history = useHistory();
   const currentPage: number = useAppSelector(selectNavigation).currentPage;
   const [index, setIndex] = useState(currentPage);
-  const path = ["/", "/task", "/masters", "/account"];
+  const path = [webPath, webPath + 'task', webPath + 'masters', webPath + 'account'];
   const isLogined: boolean = Cookies.get('isLogined') === '1' ? true : false;
   
   useEffect(()=>{
@@ -35,7 +35,7 @@ const Footer: VFC = () => {
     } else {
       setIndex(3);
       dispatch(changeNavigation(3));
-      history.push('/login');
+      history.push(webPath + 'login');
     }
   }
 

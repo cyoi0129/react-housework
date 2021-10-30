@@ -2,7 +2,7 @@
 import { VFC } from "react";
 import { useHistory } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
-import { langSet } from "../config";
+import { langSet, webPath } from "../config";
 
 // Components
 import { MasterView } from "../components";
@@ -20,7 +20,7 @@ const Masters: VFC = () => {
   const masterList = useAppSelector(selectMaster);
   const masters: masterObject[] = masterList.masters;
   const addMaster = () => {
-    history.push('/master/new');
+    history.push(webPath + 'master/new');
   }
   return (
   <Container maxWidth="sm" sx={{ pt: 10, pb: 20 }}>

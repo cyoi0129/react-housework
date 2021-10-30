@@ -1,7 +1,9 @@
 // Production switch
 import { devURL, prodURL } from './env'
-export const isProduction = false;
+export const isProduction = true;
 export const apiURL: string = isProduction ? prodURL : devURL;
+export const webPath: string = isProduction ? '/web/' : '/';
+export const imgPath: string = isProduction ? '../static/' : '/';
 
 // Date format process object
 export interface dateObject {
