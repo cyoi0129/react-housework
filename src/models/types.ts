@@ -70,3 +70,28 @@ export interface changedTaskList {
   editTaskList: taskObject[] | [];
   newTaskList: taskObject[] | [];
 }
+
+// For API call Args
+
+export interface newMasterAPI {
+  content: masterData;
+  token: string;
+}
+
+export interface targetMasterAPI {
+  content: masterObject;
+  token: string;
+}
+
+export interface targetTaskAPI {
+  content: taskObject;
+  date: string;
+  token: string;
+}
+
+export interface taskListAPI {
+  editTaskList: taskObject[] | [];
+  newTaskList: taskObject[] | [];
+  date: string;
+  token: string;
+}

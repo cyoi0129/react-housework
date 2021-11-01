@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, createSelector } from "@reduxjs/toolkit"
 import { RootState } from "../app/store";
 import { apiURL } from "../config";
 import Cookies from 'js-cookie';
-import { masterList, masterData, masterObject } from './types';
+import { masterList, masterData, masterObject, newMasterAPI, targetMasterAPI } from './types';
 
 const initialState: masterList = {
   masters: []
@@ -26,12 +26,12 @@ export const getMasterList = createAsyncThunk(
 
 export const addMaster = createAsyncThunk(
   "master/addMaster",
-  async (masterData: masterData) => {
+  async (masterData: newMasterAPI) => {
     const response = await fetch(apiURL + "api/masters/", {
       method: 'POST',
       credentials: 'include',
-      body: JSON.stringify(masterData),
-      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
+      body: JSON.stringify(masterData.content),
+      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': masterData.token })
     }).then((res) => res.json());
     return response;
   }
@@ -39,25 +39,24 @@ export const addMaster = createAsyncThunk(
 
 export const editMaster = createAsyncThunk(
   "master/editMaster",
-  async (masterObject: masterObject) => {
-    const response = await fetch(apiURL + "api/masters/" + String(masterObject.id) + "/" , {
+  async (masterObject: targetMasterAPI) => {
+    const response = await fetch(apiURL + "api/masters/" + String(masterObject.content.id) + "/" , {
       method: 'PUT',
       credentials: 'include',
-      body: JSON.stringify(masterObject),
-      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
+      body: JSON.stringify(masterObject.content),
+      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': masterObject.token })
     }).then((res) => res.json());
-    console.log(token);
     return response;
   }
 );
 
 export const removeMaster = createAsyncThunk(
   "master/removeMaster",
-  async (masterObject: masterObject) => {
-    const response = await fetch(apiURL + "api/masters/" + String(masterObject.id) + "/" , {
+  async (masterObject: targetMasterAPI) => {
+    const response = await fetch(apiURL + "api/masters/" + String(masterObject.content.id) + "/" , {
       method: 'DELETE',
       credentials: 'include',
-      body: JSON.stringify(masterObject),
+      body: JSON.stringify(masterObject.content),
       headers: new Headers({ 'Content-type': 'application/json' })
     }).then((res) => res.json());
     return response;

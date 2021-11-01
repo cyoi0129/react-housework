@@ -18,7 +18,7 @@ const Acount: VFC = () => {
   const userStatus: userStatus = useAppSelector(selectUser);
   const userInfo = userStatus.userData;
   const logout = () => {
-    dispatch(userLogout());
+    dispatch(userLogout(userStatus));
     history.push(webPath);
   }
 

@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { apiURL, convertDate } from "../config";
-import Cookies from 'js-cookie';
 import { subMonths, subWeeks, subDays } from 'date-fns';
-import { taskList, changedTaskList, taskData, existTask, taskObject } from './types';
+import { taskList, taskData, existTask, taskObject, targetTaskAPI, taskListAPI } from './types';
 
 const initialState: taskList = {
   tasks: [],
@@ -17,8 +16,6 @@ const initialState: taskList = {
   }
 }
 
-const getCookieToken = Cookies.get('csrftoken');
-const token: string = getCookieToken? getCookieToken : '';
 const setDateRange = () => {
   const today = new Date();
   const endDate = convertDate(subDays(today, 1)).dateString;
@@ -79,7 +76,7 @@ export const getMonthlyTaskList = createAsyncThunk(
 
 export const changeTaskList = createAsyncThunk(
   "task/changeTaskList",
-  async (taskData: changedTaskList) => {
+  async (taskData: taskListAPI) => {
     let postData: (taskData | existTask)[] = [];
     taskData.editTaskList.forEach( item => {
       postData.push(
@@ -106,46 +103,25 @@ export const changeTaskList = createAsyncThunk(
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(postData),
-      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
+      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': taskData.token })
     }).then((res) => res.json());
-    return response;
-  }
-);
-
-export const addTask = createAsyncThunk(
-  "task/addTask",
-  async (taskData: taskData) => {
-    const response = await fetch(apiURL + "api/tasks/", {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify(taskData),
-      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
-    }).then((res) => res.json());
-    return response;
-  }
-);
-
-export const editTask = createAsyncThunk(
-  "task/editTask",
-  async (taskObject: taskObject) => {
-    const response = await fetch(apiURL + "api/tasks/" + String(taskObject.id) + "/" , {
-      method: 'PUT',
-      credentials: 'include',
-      body: JSON.stringify(taskObject),
-      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
-    }).then((res) => res.json());
-    return response;
+    const result = {
+      content: response,
+      date: taskData.date
+    }
+    return result;
   }
 );
 
 export const deleteTask = createAsyncThunk(
   "task/deleteTask",
-  async (taskObject: taskObject) => {
-    const response = await fetch(apiURL + "api/tasks/" + String(taskObject.id) + "/" , {
+  async (targetTask: targetTaskAPI) => {
+    const targetTaskURL = `${apiURL}api/tasks/${String(targetTask.content.id)}/?start_date=${targetTask.date}&end_date=${targetTask.date}`;
+    const response = await fetch(targetTaskURL, {
       method: 'DELETE',
       credentials: 'include',
-      body: JSON.stringify(taskObject),
-      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
+      body: JSON.stringify(targetTask.content),
+      headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': targetTask.token })
     })
     .then((res) => res.json())
     .then(result => {
@@ -154,7 +130,7 @@ export const deleteTask = createAsyncThunk(
     .catch(error => {
       console.error('Error:', error);
     });
-    return taskObject.id;
+    return targetTask.content.id;
   }
 );
 
@@ -177,14 +153,8 @@ const taskSlice = createSlice({
       state.mom.month = tasks.filter(task => task.person === 'mom');
     });
     builder.addCase(changeTaskList.fulfilled, (state, action) => {
-      state.tasks = action.payload;
-    });
-    builder.addCase(addTask.fulfilled, (state, action) => {
-      state.tasks = [...state.tasks, action.payload];
-    });
-    builder.addCase(editTask.fulfilled, (state, action) => {
-      state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
-      state.tasks = [...state.tasks, action.payload];
+      const tasks: taskObject[] = action.payload.content;
+      state.tasks = tasks.filter(task => task.date === action.payload.date);
     });
     builder.addCase(deleteTask.fulfilled, (state, action) => {
       console.log('call sucess')
@@ -214,18 +184,6 @@ const taskSlice = createSlice({
       // エラー画面表示
     });
     builder.addCase(changeTaskList.rejected, () => {
-      // エラー画面表示
-    });
-    builder.addCase(addTask.pending, () => {
-      // エラー画面表示
-    });
-    builder.addCase(addTask.rejected, () => {
-      // エラー画面表示
-    });
-    builder.addCase(editTask.pending, () => {
-      // エラー画面表示
-    });
-    builder.addCase(editTask.rejected, () => {
       // エラー画面表示
     });
     builder.addCase(deleteTask.pending, () => {

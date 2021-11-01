@@ -10,7 +10,7 @@ import { Overlay, Notification } from "../components"
 
 // Models
 import { editMaster, addMaster } from "../models";
-import { masterObject, masterData, userStatus } from "../models/types";
+import { masterObject, userStatus, newMasterAPI, targetMasterAPI } from "../models/types";
 import { UserContext } from "../App";
 
 // UI
@@ -31,6 +31,7 @@ const MasterEdit: VFC<Props> = (Props) => {
   const dispatch = useAppDispatch();
   const userStatus: userStatus = useContext(UserContext).user;
   const userID = userStatus.userData? userStatus.userData.pk : 0;
+  const csrftoken: string = userStatus.token;
 
   const handleTypeChange = (event: SelectChangeEvent) => {
     setType(event.target.value as string);
@@ -41,15 +42,25 @@ const MasterEdit: VFC<Props> = (Props) => {
   }
 
   const saveMaster = () => {
-    const newMaster: masterData = {
-      user: userID,
-      type: type,
-      name: name,
-      point: point,
+    const newMaster: newMasterAPI = {
+      content: {
+        user: userID,
+        type: type,
+        name: name,
+        point: point
+      },
+      token: csrftoken
     }
     if (master.id) {
-      const newValue: masterObject = {
-        ...newMaster, id: master.id
+      const newValue: targetMasterAPI = {
+        content: {
+          id: master.id,
+          user: userID,
+          type: type,
+          name: name,
+          point: point
+        },
+        token: csrftoken
       }
       dispatch(editMaster(newValue));
     } else {

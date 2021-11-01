@@ -2,13 +2,14 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { dateObject, convertDate, langSet } from "../config";
+import Cookies from 'js-cookie';
 
 // Components
 import { TaskEdit, Overlay, Notification } from "../components";
 
 // Models
 import { getTaskList, selectTask, changeTaskList, deleteTask } from "../models";
-import { userStatus, taskList, taskObject } from "../models/types";
+import { userStatus, taskList, taskObject, targetTaskAPI, taskListAPI } from "../models/types";
 import { UserContext } from "../App";
 
 // UI
@@ -38,6 +39,7 @@ const Task = () => {
   const initTaskListData: taskObject[] = initTaskList.tasks;
   const initIDArray: number[] = initTaskListData.map(task => task.id);
   const [tasks, setTasks] = useState<taskObject[]>([]);
+  const csrftoken: string = userStatus.token;
 
   const addNewTask = () => {
     const idArray: number[] = tasks.map(task => task.id);
@@ -76,14 +78,21 @@ const Task = () => {
     const removedTasks: taskObject[] = initTaskListData.filter(task => !currentIDArray.includes(task.id));
     const existTasks: taskObject[] = tasks.filter(task => initIDArray.includes(task.id));
     const changedTasks: taskObject[] = existTasks.filter(task => task.update === true);
-    const changedTaskList = {
+    const changedTaskList: taskListAPI = {
       editTaskList: changedTasks,
-      newTaskList: newTasks
+      newTaskList: newTasks,
+      date: convertDate(date).dateString,
+      token: csrftoken
     }
     dispatch(changeTaskList(changedTaskList));
     if (removedTasks.length > 0) {
       removedTasks.forEach(target => {
-        dispatch(deleteTask(target));
+        const targetTask: targetTaskAPI = {
+          content: target,
+          date: convertDate(date).dateString,
+          token: csrftoken
+        }
+        dispatch(deleteTask(targetTask));
       })
     }
     dispatch(getTaskList(dateObj.dateString));

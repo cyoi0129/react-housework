@@ -11,9 +11,6 @@ const initialState: userStatus = {
   userData: null,
 };
 
-const getCookieToken = Cookies.get('csrftoken');
-const token: string = getCookieToken? getCookieToken : '';
-
 export const userLogin = createAsyncThunk(
   "user/userLogin",
     async (loginData: loginData) => {
@@ -32,11 +29,11 @@ export const userLogin = createAsyncThunk(
 
 export const userLogout = createAsyncThunk(
   "user/userLogout",
-    async () => {
+    async (userStatus: userStatus) => {
       const response = await fetch(apiURL + "rest-auth/logout/", {
         method: 'POST',
         credentials: 'include',
-        headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': token })
+        headers: new Headers({ 'Content-type': 'application/json', 'X-CSRFToken': userStatus.token })
       }).then((res) => res.json());
       return response;
     }
@@ -78,14 +75,15 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     setLoginStatus: (state) => {
+      const getCookieToken = Cookies.get('csrftoken');
       state.isLogined = true;
+      state.token = getCookieToken? getCookieToken : '';
     }
   },
   extraReducers: (builder) => {
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.isLogined = true;
-      Cookies.set('isLogined', '1', { expires: 1 });
-      state.token = action.payload.key;
+      Cookies.set('isLogined', '1', { expires: 90 });
     });
     builder.addCase(userLogout.fulfilled, (state, action) => {
       state.isLogined = false;
@@ -96,8 +94,7 @@ const userSlice = createSlice({
     });
     builder.addCase(userRegister.fulfilled, (state, action) => {
       state.isLogined = true;
-      Cookies.set('isLogined', '1', { expires: 1 });
-      state.token = action.payload.key;
+      Cookies.set('isLogined', '1', { expires: 90 });
     });
     builder.addCase(getUserData.fulfilled, (state, action) => {
       state.userData = action.payload;
