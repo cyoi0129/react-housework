@@ -7,6 +7,7 @@ import { userStatus, loginData, registerData } from './types';
 
 const initialState: userStatus = {
   isLogined: false,
+  error: '',
   token: '',
   userData: null,
 };
@@ -23,7 +24,11 @@ export const userLogin = createAsyncThunk(
         }),
         headers: new Headers({ 'Content-type': 'application/json' })
       }).then((res) => res.json());
-      return response;
+      if (response.key) {
+        return response;
+      } else {
+        throw new Error("Login error");
+      }
     }
 );
 
@@ -73,21 +78,18 @@ export const getUserData = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: initialState,
-  reducers: {
-    setLoginStatus: (state) => {
-      const getCookieToken = Cookies.get('csrftoken');
-      state.isLogined = true;
-      state.token = getCookieToken? getCookieToken : '';
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.isLogined = true;
       Cookies.set('isLogined', '1', { expires: 90 });
+      const getCookieToken = Cookies.get('csrftoken');
+      state.token = getCookieToken? getCookieToken : '';
     });
     builder.addCase(userLogout.fulfilled, (state, action) => {
       state.isLogined = false;
       state.userData = null;
+      state.error = '';
       Cookies.remove('isLogined');
       Cookies.remove('csrftoken');
       Cookies.remove('sessionid');
@@ -100,10 +102,12 @@ const userSlice = createSlice({
       state.userData = action.payload;
     });
     // エラー処理ブロック
-    builder.addCase(userLogin.pending, () => {
+    builder.addCase(userLogin.pending, (state) => {
+      state.error = 'Login error';
       // エラー画面表示
     });
-    builder.addCase(userLogin.rejected, () => {
+    builder.addCase(userLogin.rejected, (state) => {
+      state.error = 'Login error';
       // エラー画面表示
     });
     builder.addCase(userLogout.pending, () => {
@@ -112,10 +116,12 @@ const userSlice = createSlice({
     builder.addCase(userLogout.rejected, () => {
       // エラー画面表示
     });
-    builder.addCase(userRegister.pending, () => {
+    builder.addCase(userRegister.pending, (state) => {
+      state.error = 'Register error';
       // エラー画面表示
     });
-    builder.addCase(userRegister.rejected, () => {
+    builder.addCase(userRegister.rejected, (state) => {
+      state.error = 'Register error';
       // エラー画面表示
     });
     builder.addCase(getUserData.pending, () => {
@@ -129,4 +135,4 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const selectUser = (state: RootState) => state.user;
-export const { setLoginStatus } = userSlice.actions;
+// export const { setLoginStatus } = userSlice.actions;

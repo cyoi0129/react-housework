@@ -11,7 +11,7 @@ import { Header, Footer, ScrollToTop } from './components';
 import { webPath } from './config';
 
 // Models
-import { getUserData, selectUser, setLoginStatus, getMasterList, changeNavigation } from "./models";
+import { getUserData, selectUser, getMasterList, changeNavigation } from "./models";
 import { userStatus } from './models/types';
 
 // UI
@@ -31,9 +31,6 @@ const App: VFC = () => {
     if (isLogined) {
       dispatch(getUserData());
       dispatch(getMasterList());
-      dispatch(setLoginStatus());
-      history.push(webPath);
-      dispatch(changeNavigation(0));
     } else {
       history.push(webPath + 'login');
       dispatch(changeNavigation(3));

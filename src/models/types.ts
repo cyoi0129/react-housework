@@ -20,6 +20,7 @@ export interface registerData {
 
 export interface userStatus {
   isLogined: boolean;
+  error: string;
   token: string;
   userData: userData | null;
 }
@@ -70,8 +71,6 @@ export interface changedTaskList {
   editTaskList: taskObject[] | [];
   newTaskList: taskObject[] | [];
 }
-
-// For API call Args
 
 export interface newMasterAPI {
   content: masterData;

@@ -5,9 +5,6 @@ import { langSet } from "../config";
 import { useAppDispatch } from '../app/hooks';
 import { webPath } from '../config';
 
-// Components
-import { Overlay, Notification } from "../components"
-
 // Models
 import { editMaster, addMaster } from "../models";
 import { masterObject, userStatus, newMasterAPI, targetMasterAPI } from "../models/types";
@@ -26,8 +23,6 @@ const MasterEdit: VFC<Props> = (Props) => {
   const [name, setName] = useState<string>(master.name);
   const [type, setType] = useState<string>(master.type);
   const [point, setPoint] = useState<number>(master.point);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [snackBar, setSnackBar] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const userStatus: userStatus = useContext(UserContext).user;
   const userID = userStatus.userData? userStatus.userData.pk : 0;
@@ -66,14 +61,7 @@ const MasterEdit: VFC<Props> = (Props) => {
     } else {
       dispatch(addMaster(newMaster));
     }
-    setLoading(true);
-    setTimeout(() => {
-      setSnackBar(true);
-    }, 1000);
-    setTimeout(() => {
-      setLoading(false);
-      history.push(webPath + 'masters');
-    }, 2000);
+    history.push(webPath + 'masters');
   }
 
    return (
@@ -138,8 +126,6 @@ const MasterEdit: VFC<Props> = (Props) => {
           {langSet.master.save}
         </Button>
       </Box>
-      <Overlay isDisplay={loading} />
-      <Notification isDisplay={snackBar} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 // Production switch
 import { devURL, prodURL } from './env'
-export const isProduction = false;
+export const isProduction = true;
 export const apiURL: string = isProduction ? prodURL : devURL;
 export const webPath: string = isProduction ? '/web/' : '/';
 export const imgPath: string = isProduction ? '../static/' : '/';
@@ -52,6 +52,10 @@ const enSet = {
       pie: 'Summary Report',
       line: 'Tasks done last week',
       bar: 'Points got last week'
+    },
+    error: {
+      login: 'Login error!',
+      register: 'Register error!'
     }
   },
   home: {
@@ -129,6 +133,10 @@ const jpSet = {
       pie: 'サマリー',
       line: '先週のタスク実績',
       bar: '先週のポイント実績'
+    },
+    error: {
+      login: 'ログインエラー',
+      register: 'ユーザー登録エラー'
     }
   },
   home: {

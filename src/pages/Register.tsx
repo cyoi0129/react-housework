@@ -1,45 +1,49 @@
 // Basic Library
-import { VFC, FormEvent, useState } from "react";
+import { VFC, FormEvent, useContext, useState, useEffect } from "react";
 import { useAppDispatch } from '../app/hooks';
 import { useHistory } from "react-router-dom";
 import { langSet, webPath, imgPath } from "../config";
 
-// Components
-import { Overlay, Notification } from "../components"
-
 // Models
-import { userRegister } from "../models";
-import { registerData } from "../models/types";
+import { userRegister, changeNavigation } from "../models";
+import { registerData, userStatus } from "../models/types";
+import { UserContext } from '../App';
 
 // UI
-import { createTheme, ThemeProvider, Avatar, Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
+import { createTheme, ThemeProvider, Avatar, Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container, Snackbar, Alert } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Register: VFC = () => {
   const theme = createTheme();
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [snackBar, setSnackBar] = useState<boolean>(false);
-
+  const userStatus: userStatus = useContext(UserContext).user;
+  const loginError: string = userStatus.error;
+  const [showError, setShowError] = useState<boolean>(false);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registerInfo:registerData = {username: String(data.get('user')), email: String(data.get('email')), password1: String(data.get('password')), password2: String(data.get('password_confirm'))};
     dispatch(userRegister(registerInfo));
-    setLoading(true);
-    setTimeout(() => {
-      setSnackBar(true);
-    }, 1000);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
   };
 
   const toLogin = (event: any) => {
     event.preventDefault();
     history.push(webPath + 'login');
-  }
+  };
+
+  useEffect(() => {
+    if (userStatus.isLogined) {
+      history.push(webPath + 'account');
+      dispatch(changeNavigation(3));
+    }
+    if (userStatus.error === '') {
+      setShowError(false);
+    } else {
+      setShowError(true);
+    }
+  }, [dispatch, userStatus]);
+
   return (
     <Box sx={{ 
         backgroundImage: `url('${imgPath}login.jpg')`,
@@ -126,8 +130,9 @@ const Register: VFC = () => {
           </Box>
         </Container>
       </ThemeProvider>
-      <Overlay isDisplay={loading} />
-      <Notification isDisplay={snackBar} />
+      <Snackbar open={showError} autoHideDuration={3000} onClose={() => setShowError(false)} sx={{ zIndex: 30, width: '90%' }}>
+        <Alert onClose={() => setShowError(false)} severity="error" sx={{ width: '100%' }}>{langSet.common.error.register}</Alert>
+      </Snackbar>
     </Box>
   );
 }

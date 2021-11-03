@@ -2,7 +2,6 @@ export { selectNavigation as selectNavigation } from "./Navigator";
 export { changeNavigation as changeNavigation } from "./Navigator";
 
 export { selectUser as selectUser } from "./User" ;
-export { setLoginStatus as setLoginStatus } from "./User";
 export { getUserData as getUserData } from "./User";
 export { userLogout as userLogout } from "./User";
 export { userLogin as userLogin } from "./User";

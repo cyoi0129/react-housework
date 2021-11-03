@@ -5,7 +5,7 @@ import { dateObject, convertDate, langSet } from "../config";
 import Cookies from 'js-cookie';
 
 // Components
-import { TaskEdit, Overlay, Notification } from "../components";
+import { TaskEdit } from "../components";
 
 // Models
 import { getTaskList, selectTask, changeTaskList, deleteTask } from "../models";
@@ -29,8 +29,6 @@ export const TaskContext = createContext({} as {
 const Task = () => {
   const today: Date = new Date();
   const [date, setDate] = useState<Date | null>(today);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [snackBar, setSnackBar] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const dateObj: dateObject = convertDate(date);
   const userStatus: userStatus = useContext(UserContext).user;
@@ -97,13 +95,6 @@ const Task = () => {
     }
     dispatch(getTaskList(dateObj.dateString));
     setTasks(initTaskList.tasks);
-    setLoading(true);
-    setTimeout(() => {
-      setSnackBar(true);
-    }, 1000);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
   }
 
   useEffect(() => {
@@ -147,8 +138,6 @@ const Task = () => {
       </Grid>
       <Button variant="contained" startIcon={<AddIcon />} sx={{ m: 1, p: 1, width: 120 }} onClick={addNewTask}>{langSet.task.add}</Button>
       <Button variant="contained" startIcon={<SaveIcon />} sx={{ m: 1, p: 1, width: 120 }} onClick={saveTasks}>{langSet.task.save}</Button>
-      <Overlay isDisplay={loading} />
-      <Notification isDisplay={snackBar} />
     </Container>
   );
 }
