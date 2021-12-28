@@ -104,31 +104,31 @@ const userSlice = createSlice({
     // エラー処理ブロック
     builder.addCase(userLogin.pending, (state) => {
       state.error = 'Login error';
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(userLogin.rejected, (state) => {
       state.error = 'Login error';
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(userLogout.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(userLogout.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(userRegister.pending, (state) => {
       state.error = 'Register error';
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(userRegister.rejected, (state) => {
       state.error = 'Register error';
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(getUserData.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(getUserData.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
   }
 });

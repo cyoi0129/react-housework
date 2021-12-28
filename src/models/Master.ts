@@ -83,28 +83,28 @@ const masterSlice = createSlice({
     });
     // エラー処理ブロック
     builder.addCase(getMasterList.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(getMasterList.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(addMaster.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(addMaster.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(editMaster.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(editMaster.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(removeMaster.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(removeMaster.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
   }
 });

@@ -163,34 +163,34 @@ const taskSlice = createSlice({
     });
     // エラー処理ブロック
     builder.addCase(getTaskList.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(getTaskList.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(getWeeklyTaskList.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(getWeeklyTaskList.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(getMonthlyTaskList.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(getMonthlyTaskList.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(changeTaskList.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(changeTaskList.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(deleteTask.pending, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
     builder.addCase(deleteTask.rejected, () => {
-      // エラー画面表示
+      // エラー画面表示
     });
   }
 });
